@@ -40,14 +40,8 @@ Content-Type: application/json
 
 ###
 
-//5.1 NUTZER GRUPPE HINZUFÜGEN /:Gruppe ID/:Nutzer ID
+//5 NUTZER GRUPPE HINZUFÜGEN /:Gruppe ID/:Nutzer ID
 PUT http://localhost:8080/group/subscribeUser/202020/506070
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
-
-###
-
-//5.2 ZULETZT ZUGEFÜGTEN NUTZER ENTFERNEN /:Gruppe ID
-PUT http://localhost:8080/group/removeLast/202020
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
@@ -66,7 +60,7 @@ Content-Type: application/json
 {
     "receiverID": 506070,
     "senderID": 999,
-    "messageContent": "Hallo, TestNutzer 1, ich bin der Admin"
+    "messageContent": "Hallo TestNutzer 1, ich bin der Admin"
 }
 
 ###
@@ -97,23 +91,31 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 ###
 
 //8.3 AUFLISTEN DER NACHRICHTEN IN DEN GRUPPE,
-// IN WELCHER SICH EIN NUTZER BEFINDET /: Nutzer ID
+// IN WELCHER SICH DER NUTZER BEFINDET /: Nutzer ID
 GET http://localhost:8080/message/groupInbox/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //9. NUTZER PASSWORT ÄNDERN /:Nutzer ID
-
 PUT http://localhost:8080/user/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
 
 {
-  "password": "54321"
+  "password": "abcde"
 }
 
 ###
 
-//10. GRUPPE LÖSCHEN /:Gruppe ID
+//10 ZULETZT ZUGEFÜGTEN NUTZER ENTFERNEN /:Gruppe ID
+PUT http://localhost:8080/group/removeLast/202020
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//11. GRUPPE LÖSCHEN /:Gruppe ID
+DELETE http://localhost:8080/group/202020
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
 
