@@ -1,9 +1,10 @@
 var mongoose = require("mongoose");
+const User = require("../user/UserModel");
 
 const GroupSchema = new mongoose.Schema({
   id: { type: Number },
   groupName: { type: String, unique: true },
-  members: { type: Array }, //TODO: Maybe make String Array only
+  members: { type: Array },
 });
 
 const Group = mongoose.model("Group", GroupSchema);

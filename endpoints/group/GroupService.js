@@ -1,8 +1,6 @@
 const Group = require("./GroupModel"); //get GroupSchema
 const User = require("../user/UserModel");
 
-//TODO: getAllUsersInGroup
-
 //Get all groups
 function getGroups(callback) {
   Group.find(function (err, groups) {

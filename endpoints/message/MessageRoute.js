@@ -32,7 +32,6 @@ router.post("/send", function (req, res) {
 });
 
 //DELETE MESSAGE
-//TODO: Should check if authenticated Users ID is the same as senderID
 router.delete("/:id", function (req, res) {
   Message.findByIdAndDelete(req.params.id)
     .then((doc) => {
@@ -140,7 +139,7 @@ router.get("/groupInbox/:id", (req, res) => {
           (message) =>
             "Sent in Group: " +
             message.receiverID +
-            "; From: " +
+            " /// From: " +
             message.senderID +
             ": '" +
             message.messageContent +

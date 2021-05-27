@@ -73,13 +73,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 
 ###
 
-//UPDATE SINGLE USER
+//UPDATE USER PASSWORD
 PUT   http://localhost:8080/user/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
 
 {
-  "userName": "(Updated) Yakup Köhne"
+  "password": "54321"
 }
 
 ###

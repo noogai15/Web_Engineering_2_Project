@@ -65,7 +65,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 
 ###
 //GET MESSAGES OF A USERS GROUPS
-
 GET http://localhost:8080/message/groupInbox/456
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 

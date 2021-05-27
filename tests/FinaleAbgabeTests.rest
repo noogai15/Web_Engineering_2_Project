@@ -1,0 +1,115 @@
+//Eine Mögliche Reihenfolge von Tests, welche die wichtigsten Funktionen der Entitäten vorstellen:
+
+// 1. AUTOMATISCHES ERSTELLEN UND LOGIN EINES ADMINISTRATORS
+POST http://localhost:8080/authenticate/login
+Authorization: Basic OTk5OjEyMzQ1
+
+###
+
+// 2. NUTZER ERSTELLEN (Im Header den in Schritt 1. erstellten Session Key eingeben, da es nur Admins erlaubt ist)
+POST http://localhost:8080/user/register
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhdCI6MTYyMjE0ODU2MCwiZXhwIjoxNjIzNzcxMDA4NTYzfQ.TbLKw46neDqr4BYUNdheL43iko-DlYz_6RoBKEnko7k
+Content-Type:  application/json
+
+{
+  "id": 506070,
+  "userName": "TestNutzer1",
+  "email": "test@gmail.com",
+  "password": "12345",
+  "isAdministrator": false
+}
+
+###
+
+// 3. ALLE NUTZER AUFLISTEN 
+//(Nur Admin und TestNutzer1 werden angezeigt)
+GET http://localhost:8080/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//4. ANLEGEN EINER GRUPPE
+POST http://localhost:8080/group/createGroup
+Content-Type: application/json
+
+{
+    "id": 202020,
+    "groupName": "Test Gruppe",
+    "members": []
+}
+
+###
+
+//5.1 NUTZER GRUPPE HINZUFÜGEN /:groupID/:userID
+PUT http://localhost:8080/group/subscribeUser/202020/506070
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//5.2 ZULETZT ZUGEFÜGTEN NUTZER ENTFERNEN
+PUT http://localhost:8080/group/removeLast/202020
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//6. AUFLISTEN DER GRUPPEN
+GET http://localhost:8080/group
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//7.1 ANLEGEN EINER NACHRICHT FÜR EINEN NUTZER
+POST http://localhost:8080/message/send
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type: application/json
+
+{
+    "receiverID": 506070,
+    "senderID": 999,
+    "messageContent": "Hallo, TestNutzer 1, ich bin der Admin"
+}
+
+###
+
+//7.2 ANLEGEN EINER NACHRICHT FÜR EINE GRUPPE
+POST http://localhost:8080/message/send
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type: application/json
+
+{
+    "receiverID": 202020,
+    "senderID": 999,
+    "messageContent": "Hallo Test Gruppe, ich bin der Admin"
+}
+
+###
+
+//8.1 AUFLISTEN DER NACHRICHTEN FÜR DEN NUTZER
+GET http://localhost:8080/message/inbox/506070
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//8.2 AUFLISTEN DER NACHRICHTEN FÜR DIE GRUPPE
+GET http://localhost:8080/message/inbox/202020
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//8.3 AUFLISTEN DER NACHRICHTEN IN DEN GRUPPE, IN WELCHER SICH EIN NUTZER BEFINDET
+GET http://localhost:8080/message/groupInbox/506070
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//9. NUTZER PASSWORT ÄNDERN /:userID
+
+PUT http://localhost:8080/user/506070
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type:  application/json
+
+{
+  "password": "54321"
+}
+
+###

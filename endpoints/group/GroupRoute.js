@@ -119,9 +119,9 @@ router.get("/", function (req, res, next) {
           (group) =>
             "ID: " +
             group.id +
-            "; Username: " +
+            " /// Group Name: " +
             group.groupName +
-            "; Members:" +
+            " /// Members:" +
             group.members.map((member) => " " + member.userName)
         )
       );

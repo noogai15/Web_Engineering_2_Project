@@ -7,8 +7,6 @@ var userService = require("./UserService");
 const User = require("./UserModel");
 const { isAuthenticated } = require("../authentication/AuthenticationService");
 
-//TODO: Add Auth check to deletes
-
 //Create and add user to DB
 router.post("/register", function (req, res, next) {
   checkIfAdmin(req.headers, (err, user) => {
@@ -60,7 +58,7 @@ function checkIfAdmin(header, callback) {
       err = "Not authorized"; //Making err != null so that err check when calling this function can be both if(err) or if(!result)
       return callback(err, null);
     }
-    console.log("Found User: " + result);
+    console.log("Found User");
     return callback(null, result);
   });
 }
@@ -72,7 +70,7 @@ router.get("/", function (req, res, next) {
     if (result) {
       res.json(
         result.map(
-          (user) => "ID: " + user.id + " ;;; Username: " + user.userName
+          (user) => "ID: " + user.id + " /// Username: " + user.userName
         )
       );
     } else {
@@ -135,25 +133,34 @@ router.get("/:id", (req, res) => {
         return res.status(404).end();
       }
       return res.json(
-        doc.map((user) => "ID: " + user.id + " ;;; Username: " + user.userName)
+        doc.map((user) => "ID: " + user.id + " /// Username: " + user.userName)
       );
     })
     .catch((err) => next(err));
 });
 
-//UPDATE USER
+//UPDATE USER PASSWORD
 router.put("/:id", (req, res) => {
-  console.log("Searching for User to be updated");
-  var conditions = { id: req.params.id };
-  User.updateOne(conditions, req.body).then((doc) => {
-    if (doc) {
-      console.log("Found User and updated");
-      res.status(200);
-      return res.send("UPDATED USER");
+  let hash = bcrypt.hash(req.body.password, 5, (err, hash) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: err,
+      });
     }
-    console.log("Couldn't find User");
-    res.status(404);
-    return res.send("A problem occured");
+
+    console.log("Searching for User to be updated");
+    var conditions = { id: req.params.id };
+    User.updateOne(conditions, hash).then((doc) => {
+      if (doc) {
+        console.log("Found User and updated");
+        res.status(200);
+        return res.send("UPDATED USER");
+      }
+      console.log("Couldn't find User");
+      res.status(404);
+      return res.send("A problem occured");
+    });
   });
 });
 
