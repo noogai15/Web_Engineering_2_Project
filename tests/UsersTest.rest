@@ -17,7 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhd
 Content-Type:  application/json
 
 {
-  "id": 123,
+  "id": 765,
   "userName": "Yakup",
   "email": "ykohne@gmail.com",
   "password": "12345",
@@ -32,7 +32,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhd
 Content-Type:  application/json
 
 {
-  "id": 456,
+  "id": 765,
   "userName": "Ela",
   "email": "ela@gmail.com",
   "password": "12345",
