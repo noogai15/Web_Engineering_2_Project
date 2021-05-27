@@ -1,4 +1,5 @@
 const User = require("./UserModel"); //get UserSchema
+var jwt = require("jsonwebtoken");
 
 //Get users from DB
 function getUsers(callback) {
@@ -10,6 +11,19 @@ function getUsers(callback) {
       console.log("Found user");
       return callback(null, users);
     }
+  });
+}
+
+function getUserFromHeader(header, callback) {
+  let userID = jwt.decode(header.authorization.split(" ")[1]).user;
+  let query = User.findOne({ id: userID });
+  query.exec(function (err, result) {
+    if (err) {
+      console.log("UserService: Could not get User from header");
+      return callback(err, null);
+    }
+    console.log("Found User: " + result);
+    return callback(null, result);
   });
 }
 
@@ -68,4 +82,5 @@ function findUserBy(searchUserID, callback) {
 module.exports = {
   getUsers,
   findUserBy,
+  getUserFromHeader,
 };

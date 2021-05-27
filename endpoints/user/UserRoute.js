@@ -11,7 +11,7 @@ const { isAuthenticated } = require("../authentication/AuthenticationService");
 
 //Create and add user to DB
 router.post("/register", function (req, res, next) {
-  getUserFromHeader(req.headers, (err, user) => {
+  userService.getUserFromHeader(req.headers, (err, user) => {
     if (err) {
       console.log("Problem, couldn't get User from header");
       res.status(503);
@@ -51,19 +51,6 @@ router.post("/register", function (req, res, next) {
     });
   });
 });
-
-function getUserFromHeader(header, callback) {
-  let userID = jwt.decode(header.authorization.split(" ")[1]).user;
-  let query = User.findOne({ id: userID });
-  query.exec(function (err, result) {
-    if (err) {
-      console.log("UserService: Could not get User from header");
-      return callback(err, null);
-    }
-    console.log("Found User: " + result);
-    return callback(null, result);
-  });
-}
 
 //Get users
 router.get("/", isAuthenticated, function (req, res, next) {
