@@ -1,0 +1,49 @@
+//CREATE GROUP
+POST http://localhost:8080/group/createGroup
+Content-Type: application/json
+
+{
+    "id": 333,
+    "groupName": "Group 3",
+    "members": []
+}
+
+###
+//UPDATE GROUP
+PUT http://localhost:8080/group/111
+Content-Type: application/json
+
+{
+
+    "groupName": "(Updated) Group Name 1"
+}
+###
+
+//GET ALL GROUPS
+GET http://localhost:8080/group
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//DELETE GROUP
+DELETE http://localhost:8080/group/60ad6cdf2695642c986e8532
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//REMOVE LAST ADDED MEMBER
+PUT http://localhost:8080/group/removeLast/111
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//SUBSCRIBE USER TO GROUP /groupID/userID
+PUT http://localhost:8080/group/subscribeUser/111/123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+###
+
+//GET GROUPS THE USER IS SUBSCIBED TO
+GET http://localhost:8080/group/groupsOf/123
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+
