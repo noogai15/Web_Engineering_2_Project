@@ -1,54 +1,47 @@
 
-// Find all users, if authenticated
+// FIND ALL USERS
 GET http://localhost:8080/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
-// Delete user
-DELETE  http://localhost:8080/user/60ac0f3a24d29051c4e71d6b
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
-###
-//Get single user
+//GET SINGLE USER
 GET http://localhost:8080/user/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
-###
-
-//Delete all users
-DELETE http://localhost:8080/user/deleteAllWithID/UserTest
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
-// CREATE USER (AS ADMIN, WILL WORK)
+// CREATE USER (AS ADMIN, SHOULD WORK)
 POST http://localhost:8080/user/register
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo4ODgsImlhdCI6MTYyMjA2MDk4MSwiZXhwIjoxNjIzNjgzMzQyNDUwfQ.UNymtACrJlhRvCz_nl23YN3LBDKTTVeijsmwmhuBOoY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhdCI6MTYyMjEzMjQ4NiwiZXhwIjoxNjIzNzU0OTE4OTY3fQ.Z3b9U00xfssIlWo4bdW7u_whDPasTRBRkNMFbTBr0S8
 Content-Type:  application/json
 
 {
-  "id": 375,
-  "userName": "Test",
-  "email": "test@gmail.com",
+  "id": 123,
+  "userName": "Yakup",
+  "email": "ykohne@gmail.com",
   "password": "12345",
   "isAdministrator": false
 }
+
 ###
 
-// CREATE USER (AS BASIC USER, WILL NOT WORK)
+// CREATE USER (AS BASIC USER, SHOULD NOT WORK)
 POST http://localhost:8080/user/register
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhdCI6MTYyMjA2Nzg1NSwiZXhwIjoxNjIzNjkwMjIzMDg0fQ.dyn558xxekxy8i72qlV2YTBwWCBygDkwIWAPCuh8eDE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhdCI6MTYyMjEzMjU1NSwiZXhwIjoxNjIzNzU0OTg3OTE5fQ.-IzG-rEKV4NrFTMEfz7ic6g2_WXhoHiX9HTxSG6zkEY
 Content-Type:  application/json
 
 {
-  "id": 372,
-  "userName": "ZZZZ",
-  "email": "ilhan@gmail.com",
+  "id": 456,
+  "userName": "Ela",
+  "email": "ela@gmail.com",
   "password": "12345",
   "isAdministrator": false
 }
+
 ###
 
-//Create Admin
+//CREATE ADMIN
 POST http://localhost:8080/user/register
 Content-Type:  application/json
 
@@ -62,7 +55,25 @@ Content-Type:  application/json
 
 ###
 
-//WIP Update single user
+// DELETE SINGLE USER (AS ADMIN, SHOULD WORK)
+DELETE  http://localhost:8080/user/60aed1357e5c5f2e44d96133
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhdCI6MTYyMjEzMjQ4NiwiZXhwIjoxNjIzNzU0OTE4OTY3fQ.Z3b9U00xfssIlWo4bdW7u_whDPasTRBRkNMFbTBr0S8
+
+###
+
+// DELETE SINGLE USER (AS BASIC USER, SHOULD NOT WORK)
+DELETE  http://localhost:8080/user/60aed1357e5c5f2e44d96133
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhdCI6MTYyMjEzMjU1NSwiZXhwIjoxNjIzNzU0OTg3OTE5fQ.-IzG-rEKV4NrFTMEfz7ic6g2_WXhoHiX9HTxSG6zkEY
+
+###
+
+//DELETE ALL USERS (WIP)
+DELETE http://localhost:8080/user/deleteAllWithID/UserTest
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+
+###
+
+//UPDATE SINGLE USER
 PUT   http://localhost:8080/user/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
@@ -72,6 +83,4 @@ Content-Type:  application/json
 }
 
 ###
-
-//WIP Find single user
 

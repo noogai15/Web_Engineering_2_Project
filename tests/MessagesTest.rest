@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "receiverID": 123,
     "senderID": 456,
-    "messageContent": "Ok, tschüss"
+    "messageContent": "Test2"
 }
 
 ###
@@ -16,14 +16,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 Content-Type: application/json
 
 {
-    "receiverID": 111,
-    "senderID": 123,
-    "messageContent": "sdawdsddef"
+    "receiverID": 222,
+    "senderID": 456,
+    "messageContent": "Hallo, wie gehts?"
 }
 
 ###
 //UPDATE MESSAGE (BY ID)
-PUT http://localhost:8080/message/60ae1e2b58decf25f4461349
+PUT http://localhost:8080/message/60afb77307ffbd255b4f53680
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 ###
 
 //GET SINGLE MESSAGE BY ID
-GET http://localhost:8080/message/60ad6a71af48d6551c73bbb3
+GET http://localhost:8080/message/60afb77307ffbd55b4f53680
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
@@ -55,7 +55,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 
 ###
 //GET INBOX FOR GROUP (/:receiverID)
-GET http://localhost:8080/message/inbox/987
+GET http://localhost:8080/message/inbox/111
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
@@ -66,6 +66,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 ###
 //GET MESSAGES OF A USERS GROUPS
 
-GET http://localhost:8080/message/groupInbox/123
+GET http://localhost:8080/message/groupInbox/456
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 

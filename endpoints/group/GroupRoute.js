@@ -16,7 +16,6 @@ router.post("/createGroup", function (req, res) {
   group
     .save()
     .then((result) => {
-      console.log(result);
       res.status(201).json({
         message: "GROUP CREATED",
       });
@@ -64,12 +63,12 @@ router.put("/removeLast/:groupID", function (req, res) {
 
   groupService.findGroupBy(req.params.groupID, function (error, foundGroup) {
     if (foundGroup) {
-      console.log("Found Group, attepting to remove last added User");
+      console.log("Found Group, now removing User");
       group = foundGroup;
 
       group.members.pop();
       group.save();
-      res.send(group);
+      res.send({ Members: group.members });
     } else {
       console.log("Could not find Group");
       return res.status(404);
@@ -96,7 +95,7 @@ router.put("/subscribeUser/:groupID/:id", function (req, res) {
 
             group.members.push(user);
             group.save();
-            res.send(group);
+            res.send({ Members: group.members });
           } else {
             console.log("Could not find Group");
             return res.status(404);
@@ -113,9 +112,19 @@ router.put("/subscribeUser/:groupID/:id", function (req, res) {
 //Get Groups
 router.get("/", function (req, res, next) {
   groupService.getGroups(function (err, result) {
-    console.log("Result: " + result);
+    console.log("Success");
     if (result) {
-      res.send(Object.values(result));
+      res.json(
+        result.map(
+          (group) =>
+            "ID: " +
+            group.id +
+            "; Username: " +
+            group.groupName +
+            "; Members:" +
+            group.members.map((member) => " " + member.userName)
+        )
+      );
     } else {
       res.send("Problem occured");
     }
@@ -127,7 +136,7 @@ router.get("/groupsOf/:id", function (req, res) {
   groupService.getUsersGroups(Number(req.params.id), function (err, groups) {
     if (groups) {
       res.status(201);
-      res.send(Object.values(groups));
+      res.json(groups.map((group) => "Group Name: " + group.groupName));
     } else {
       res.status(404);
       res.send("Problem occured");

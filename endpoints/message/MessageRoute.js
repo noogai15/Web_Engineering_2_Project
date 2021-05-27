@@ -17,7 +17,8 @@ router.post("/send", function (req, res) {
   message
     .save()
     .then((result) => {
-      console.log(result);
+      console.log("Message sent");
+      console.log("Message Content: " + result.messageContent);
       res.status(201).json({
         message: "MESSAGE SENT",
       });
@@ -53,7 +54,11 @@ router.get("/:id", function (req, res) {
       if (!doc) {
         return res.status(404).end();
       }
-      return res.status(200).json(doc);
+      res.send({
+        Sender: doc.senderID,
+        Receiver: doc.receiverID,
+        Content: doc.messageContent,
+      });
     })
     .catch((err) => next(err));
 });
@@ -93,7 +98,12 @@ router.get("/inbox/:id", (req, res) => {
   messageService.findMessageBy(req.params.id, true, function (err, message) {
     if (message) {
       res.status(201);
-      res.send(Object.values(message));
+      res.json(
+        message.map(
+          (message) =>
+            "From: " + message.senderID + ": '" + message.messageContent + "'"
+        )
+      );
     } else {
       console.log("A problem occured while getting the inbox");
       res.status(404);
@@ -120,7 +130,23 @@ router.get("/groupInbox/:id", (req, res) => {
     Message.find({
       receiverID: { $in: groupIds },
     }).exec((error, groupMessages) => {
-      res.json(groupMessages.map((message) => message.messageContent));
+      if (error) {
+        console.log("Error getting this Groups Messages");
+        res.status(404);
+        res.send("Could not get this Groups Messages");
+      }
+      res.json(
+        groupMessages.map(
+          (message) =>
+            "Sent in Group: " +
+            message.receiverID +
+            "; From: " +
+            message.senderID +
+            ": '" +
+            message.messageContent +
+            "'"
+        )
+      );
     });
   });
 });
@@ -131,7 +157,16 @@ router.get("/sent/:id", (req, res) => {
   messageService.findMessageBy(req.params.id, false, function (err, message) {
     if (message) {
       res.status(201);
-      res.send(Object.values(message));
+      res.json(
+        message.map(
+          (message) =>
+            "Sent to: " +
+            message.receiverID +
+            ": '" +
+            message.messageContent +
+            "'"
+        )
+      );
     } else {
       console.log("A problem occured while getting the sent messages");
       return res.status(404);

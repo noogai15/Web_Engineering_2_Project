@@ -14,19 +14,6 @@ function getUsers(callback) {
   });
 }
 
-function getUserFromHeader(header, callback) {
-  let userID = jwt.decode(header.authorization.split(" ")[1]).user;
-  let query = User.findOne({ id: userID });
-  query.exec(function (err, result) {
-    if (err) {
-      console.log("UserService: Could not get User from header");
-      return callback(err, null);
-    }
-    console.log("Found User: " + result);
-    return callback(null, result);
-  });
-}
-
 function findUserBy(searchUserID, callback) {
   console.log("UserService: find User with ID: " + searchUserID);
 
@@ -82,5 +69,4 @@ function findUserBy(searchUserID, callback) {
 module.exports = {
   getUsers,
   findUserBy,
-  getUserFromHeader,
 };
