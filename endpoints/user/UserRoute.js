@@ -66,12 +66,14 @@ function checkIfAdmin(header, callback) {
 }
 
 //Get users
-router.get("/", isAuthenticated, function (req, res, next) {
+router.get("/", function (req, res, next) {
   userService.getUsers(function (err, result) {
     console.log("Result: " + result);
     if (result) {
       res.json(
-        result.map((user) => "ID: " + user.id + "; Username: " + user.userName)
+        result.map(
+          (user) => "ID: " + user.id + " ;;; Username: " + user.userName
+        )
       );
     } else {
       res.send("Problem occured");
@@ -80,7 +82,7 @@ router.get("/", isAuthenticated, function (req, res, next) {
 });
 
 //Delete all users
-router.delete("/deleteAllWithID:id", isAuthenticated, function (req, res) {
+router.delete("/deleteAllWithID:id", function (req, res) {
   checkIfAdmin(req.headers, (err, user) => {
     if (err) {
       console.log("Authorization error");
@@ -105,7 +107,7 @@ router.delete("/deleteAllWithID:id", isAuthenticated, function (req, res) {
 });
 
 //Delete
-router.delete("/:id", isAuthenticated, function (req, res) {
+router.delete("/:id", function (req, res) {
   checkIfAdmin(req.headers, (err, user) => {
     if (err) {
       console.log("Authorization error");
@@ -126,14 +128,14 @@ router.delete("/:id", isAuthenticated, function (req, res) {
 });
 
 //Find user
-router.get("/:id", isAuthenticated, (req, res) => {
+router.get("/:id", (req, res) => {
   User.find({ id: req.params.id })
     .then((doc) => {
       if (!doc) {
         return res.status(404).end();
       }
       return res.json(
-        doc.map((user) => "ID: " + user.id + "; Username: " + user.userName)
+        doc.map((user) => "ID: " + user.id + " ;;; Username: " + user.userName)
       );
     })
     .catch((err) => next(err));

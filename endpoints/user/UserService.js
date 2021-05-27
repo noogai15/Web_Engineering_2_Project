@@ -1,5 +1,6 @@
 const User = require("./UserModel"); //get UserSchema
 var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
 
 //Get users from DB
 function getUsers(callback) {
@@ -31,30 +32,39 @@ function findUserBy(searchUserID, callback) {
           console.log(`Found userID: ${searchUserID}`);
           callback(null, user);
         } else {
-          if (000 == searchUserID) {
+          if (999 == searchUserID) {
             console.log(
               "Do not have admin account yet. Created with default password"
             );
-            const adminUser = new User({
-              id: 888,
-              password: "123",
-              email: "admin@gmail.com",
-              userName: "Default Administrator Account",
-              isAdministrator: true,
-            });
-
-            adminUser.save(function (err) {
+            bcrypt.hash("12345", 5, (err, hash) => {
               if (err) {
-                console.log(
-                  "Was not able to create Admin account. Error: " + err
-                );
-                callback(
-                  "Was not able to log into Admin account. Error: ",
-                  null
-                );
-              } else {
-                callback(null, adminUser);
+                console.log(err);
+                return res.status(500).json({
+                  error: err,
+                });
               }
+
+              const adminUser = new User({
+                id: 999,
+                password: hash,
+                email: "admin@gmail.com",
+                userName: "Default Administrator Account",
+                isAdministrator: true,
+              });
+
+              adminUser.save(function (err) {
+                if (err) {
+                  console.log(
+                    "Was not able to create Admin account. Error: " + err
+                  );
+                  callback(
+                    "Was not able to log into Admin account. Error: ",
+                    null
+                  );
+                } else {
+                  callback(null, adminUser);
+                }
+              });
             });
           } else {
             console.log("Could not find user for userID: " + searchUserID);
