@@ -40,13 +40,13 @@ Content-Type: application/json
 
 ###
 
-//5.1 NUTZER GRUPPE HINZUFÜGEN /:groupID/:userID
+//5.1 NUTZER GRUPPE HINZUFÜGEN /:Gruppe ID/:Nutzer ID
 PUT http://localhost:8080/group/subscribeUser/202020/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
-//5.2 ZULETZT ZUGEFÜGTEN NUTZER ENTFERNEN
+//5.2 ZULETZT ZUGEFÜGTEN NUTZER ENTFERNEN /:Gruppe ID
 PUT http://localhost:8080/group/removeLast/202020
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
@@ -84,25 +84,26 @@ Content-Type: application/json
 
 ###
 
-//8.1 AUFLISTEN DER NACHRICHTEN FÜR DEN NUTZER
+//8.1 AUFLISTEN DER NACHRICHTEN FÜR DEN NUTZER /:Nutzer ID
 GET http://localhost:8080/message/inbox/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
-//8.2 AUFLISTEN DER NACHRICHTEN FÜR DIE GRUPPE
+//8.2 AUFLISTEN DER NACHRICHTEN FÜR DIE GRUPPE /: Gruppe ID
 GET http://localhost:8080/message/inbox/202020
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
-//8.3 AUFLISTEN DER NACHRICHTEN IN DEN GRUPPE, IN WELCHER SICH EIN NUTZER BEFINDET
+//8.3 AUFLISTEN DER NACHRICHTEN IN DEN GRUPPE,
+// IN WELCHER SICH EIN NUTZER BEFINDET /: Nutzer ID
 GET http://localhost:8080/message/groupInbox/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
-//9. NUTZER PASSWORT ÄNDERN /:userID
+//9. NUTZER PASSWORT ÄNDERN /:Nutzer ID
 
 PUT http://localhost:8080/user/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
@@ -113,3 +114,6 @@ Content-Type:  application/json
 }
 
 ###
+
+//10. GRUPPE LÖSCHEN /:Gruppe ID
+

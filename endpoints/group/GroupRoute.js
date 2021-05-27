@@ -46,15 +46,22 @@ router.put("/:id", (req, res) => {
 
 //Delete Group
 router.delete("/:id", function (req, res) {
-  Group.findByIdAndDelete(req.params.id)
-    .then((doc) => {
-      if (!doc) {
-        return res.status(404).end();
+  var query = Group.findOne({ id: req.params.id });
+  query.exec((err, result) => {
+    if (err) {
+      console.log("Couldn't find Group to delete");
+      res.status(404);
+      return res.send("Couldn't find Group to delete");
+    }
+    Group.findByIdAndDelete(result._id, (err, group) => {
+      if (err) {
+        res.status(404);
+        return res.send("Couldn't find Group to delete");
       }
       console.log("GROUP DELETED");
-      return res.send(doc + "\n\nGROUP DELETED");
-    })
-    .catch((err) => next(err));
+      return res.send(group + "\n\nGROUP DELETED");
+    });
+  });
 });
 
 //Remove last added Member from Group
