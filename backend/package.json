@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": "http://localhost:3000",
   "scripts": {
-    "devStart": "nodemon index.js"
+    "devStart": "nodemon index.js",
+    "build": "cd client && npm install && npm run build"
   },
   "author": "",
   "license": "ISC",
@@ -12,9 +14,11 @@
     "accesscontrol": "^2.2.1",
     "bcrypt": "^5.0.1",
     "config": "^3.3.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.7",
+    "react-redux": "^7.2.4",
     "socket.io": "^4.1.2"
   },
   "devDependencies": {

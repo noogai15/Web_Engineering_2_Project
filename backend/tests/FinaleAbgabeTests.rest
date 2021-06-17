@@ -1,6 +1,7 @@
 //Eine Mögliche Reihenfolge von Tests, welche die wichtigsten Funktionen der Entitäten vorstellen:
 
 // 1. AUTOMATISCHES ERSTELLEN UND LOGIN EINES ADMINISTRATORS
+//TODO: CHANGE IT TO LOGIN WITH A JSON BODY
 POST http://localhost:8080/authenticate/login
 Authorization: Basic OTk5OjEyMzQ1
 
@@ -12,8 +13,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhd
 Content-Type:  application/json
 
 {
-  "id": 506070,
-  "userName": "TestNutzer1",
+  "id": 909090,
+  "userName": "Yakup",
   "email": "test@gmail.com",
   "password": "12345",
   "isAdministrator": false

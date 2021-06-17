@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const db = require("mongoose");
 const bcrypt = require("bcrypt");
+const path = require("path");
+
+const cors = require("cors");
 
 const fs = require("fs");
 const key = fs.readFileSync("certificates/key.pem");
@@ -15,6 +18,9 @@ const groupsRouter = require("./endpoints/group/GroupRoute");
 const messagesRouter = require("./endpoints/message/MessageRoute");
 
 app.use(express.json());
+app.use(
+  cors({ allowedHeaders: ["authorization"], exposedHeaders: ["authorization"] })
+);
 
 //Use the routes in the folders
 app.use("/user", usersRoutes); // URL has to have with /user/
@@ -35,8 +41,9 @@ database.initDB(function (err, db) {
 //HTTPS as communication protocol
 const server = https.createServer({ key: key, cert: cert }, app);
 
-app.get("/", (req, res) => {
-  res.send("This is an insecure server");
+//Test purposes
+app.get("/api", (req, res) => {
+  res.json({ message: "Hello from server!" });
 });
 
 app.listen(8080, () => {

@@ -12,7 +12,7 @@ router.post("/login", function (req, res, next) {
 
   createSessionToken(req.headers, function (err, token, user) {
     if (token) {
-      res.header("Autherization", "Bearer: " + token);
+      res.header("Authorization", "Bearer " + token);
 
       if (user) {
         const { id, userName, ...partialObject } = user;
