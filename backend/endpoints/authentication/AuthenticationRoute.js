@@ -44,9 +44,9 @@ function createSessionToken(header, callback) {
   const credentials = Buffer.from(base64Credentials, "base64").toString(
     "ascii"
   );
-  const [userID, password] = credentials.split(":");
+  const [userName, password] = credentials.split(":");
 
-  userService.findUserBy(userID, function (error, user) {
+  userService.findUserBy(userName, function (error, user) {
     if (user) {
       user.comparePassword(password, function (err, isMatch) {
         //Now check if password is correct
@@ -78,7 +78,7 @@ function createSessionToken(header, callback) {
       });
     } else {
       //If no user was found
-      console.log("User Services: Did not find user for userID: " + userID);
+      console.log("User Services: Did not find user for userName: " + userName);
       callback("User was not found", null);
     }
   });

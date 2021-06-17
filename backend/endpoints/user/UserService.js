@@ -15,24 +15,27 @@ function getUsers(callback) {
   });
 }
 
-function findUserBy(searchUserID, callback) {
-  console.log("UserService: find User with ID: " + searchUserID);
+function findUserBy(searchUserName, callback) {
+  console.log("UserService: find User with ID: " + searchUserName);
 
-  if (!searchUserID) {
+  if (!searchUserName) {
     callback("No userID");
     return;
   } else {
-    var query = User.findOne({ id: searchUserID });
+    var query = User.findOne({ userName: searchUserName });
     query.exec(function (err, user) {
       if (err) {
-        console.log("Did not find user for userID: " + searchUserID);
-        return callback("Did not find user for userID: " + searchUserID, null);
+        console.log("Did not find user for userID: " + searchUserName);
+        return callback(
+          "Did not find user for userID: " + searchUserName,
+          null
+        );
       } else {
         if (user) {
-          console.log(`Found userID: ${searchUserID}`);
+          console.log(`Found userID: ${searchUserName}`);
           callback(null, user);
         } else {
-          if (999 == searchUserID) {
+          if ("admin" == searchUserName) {
             console.log(
               "Do not have admin account yet. Created with default password"
             );
@@ -67,7 +70,7 @@ function findUserBy(searchUserID, callback) {
               });
             });
           } else {
-            console.log("Could not find user for userID: " + searchUserID);
+            console.log("Could not find user for userID: " + searchUserName);
             callback(null, user);
           }
         }
