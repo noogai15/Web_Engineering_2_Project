@@ -1,5 +1,0 @@
-HTTPS:
-https://github.com/noogai15/Web_Engineering_2_Project.git
-
-SSH:
-git@github.com:noogai15/Web_Engineering_2_Project.git
