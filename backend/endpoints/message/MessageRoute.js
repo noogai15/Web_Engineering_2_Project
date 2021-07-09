@@ -10,9 +10,11 @@ const { isAuthenticated } = require("../authentication/AuthenticationService");
 //CREATE AND SAVE MESSAGE
 router.post("/send", function (req, res) {
   const message = new Message({
-    receiverID: req.body.receiverID,
-    senderID: req.body.senderID,
+    receiverName: req.body.receiverName,
+    senderName: req.body.senderName,
+    subject: req.body.subject,
     messageContent: req.body.messageContent,
+    dateSent: new Date().toISOString().replace(/T/, " ").replace(/\..+/, ""),
   });
   message
     .save()
@@ -54,9 +56,14 @@ router.get("/:id", function (req, res) {
         return res.status(404).end();
       }
       res.send({
-        Sender: doc.senderID,
-        Receiver: doc.receiverID,
+        Sender: doc.senderName,
+        Receiver: doc.receiverName,
+        Subject: doc.subject,
         Content: doc.messageContent,
+        DateSent: new Date()
+          .toISOString()
+          .replace(/T/, " ")
+          .replace(/\..+/, ""),
       });
     })
     .catch((err) => next(err));
@@ -92,85 +99,68 @@ router.put("/:id", (req, res) => {
 });
 
 //INBOX FOR USER
-router.get("/inbox/:id", (req, res) => {
-  console.log("Getting the inbox of " + req.params.id);
-  messageService.findMessageBy(req.params.id, true, function (err, message) {
-    if (message) {
-      res.status(201);
-      res.json(
-        message.map(
-          (message) =>
-            "From: " + message.senderID + ": '" + message.messageContent + "'"
-        )
-      );
-    } else {
-      console.log("A problem occured while getting the inbox");
-      res.status(404);
-      res.send("A problem occured while getting the inbox");
+router.get("/inbox/:userName", (req, res) => {
+  console.log("Getting the inbox of " + req.params.userName);
+  messageService.findMessageBy(
+    req.params.userName,
+    true,
+    function (err, message) {
+      if (message) {
+        res.status(201);
+        res.send(JSON.stringify(message));
+      } else {
+        console.log("A problem occured while getting the inbox");
+        res.status(404);
+        res.send("A problem occured while getting the inbox");
+      }
     }
-  });
+  );
 });
 
 //INBOX FOR GROUP
-router.get("/groupInbox/:id", (req, res) => {
-  console.log("Getting all Group inboxes for User: " + req.params.id);
-  groupService.getUsersGroups(req.params.id, (err, groups) => {
+router.get("/groupInbox/:userName", (req, res) => {
+  console.log("Getting all Group inboxes for User: " + req.params.userName);
+  groupService.getUsersGroups(req.params.userName, (err, groups) => {
     if (err) {
       console.log(
-        "Problem occured while getting " + req.params.id + "'s Groups"
+        "Problem occured while getting " + req.params.userName + "'s Groups"
       );
       res.status(500);
       res.send("A problem occured");
       return;
     }
-    console.log("Found Groups for User: " + req.params.id);
+    console.log("Found Groups for User: " + req.params.userName);
 
-    const groupIds = groups.map((group) => group.id);
+    const groupNames = groups.map((group) => group.groupName);
     Message.find({
-      receiverID: { $in: groupIds },
+      receiverName: { $in: groupNames },
     }).exec((error, groupMessages) => {
       if (error) {
         console.log("Error getting this Groups Messages");
         res.status(404);
         res.send("Could not get this Groups Messages");
       }
-      res.json(
-        groupMessages.map(
-          (message) =>
-            "Sent in Group: " +
-            message.receiverID +
-            " /// From: " +
-            message.senderID +
-            ": '" +
-            message.messageContent +
-            "'"
-        )
-      );
+      res.send(JSON.stringify(groupMessages));
     });
   });
 });
 
 //SENT MESSAGES FOR USER
-router.get("/sent/:id", (req, res) => {
-  console.log("Getting the inbox of " + req.params.id);
-  messageService.findMessageBy(req.params.id, false, function (err, message) {
-    if (message) {
-      res.status(201);
-      res.json(
-        message.map(
-          (message) =>
-            "Sent to: " +
-            message.receiverID +
-            ": '" +
-            message.messageContent +
-            "'"
-        )
-      );
-    } else {
-      console.log("A problem occured while getting the sent messages");
-      return res.status(404);
+router.get("/sent/:userName", (req, res) => {
+  console.log("Getting the inbox of " + req.params.userName);
+  messageService.findMessageBy(
+    req.params.userName,
+    false,
+    function (err, messages) {
+      if (messages) {
+        res.status(201);
+        res.send(JSON.stringify(messages));
+      } else {
+        console.log("A problem occured while getting the sent messages");
+        return res.status(404);
+      }
     }
-  });
+  );
 });
 
 module.exports = router;

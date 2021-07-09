@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
-import { connect } from "react-redux"; //cConnecting components with Redux
+import { connect } from "react-redux"; //Connecting components with Redux
 
 import { getShowLoginDialogAction } from "../actions/AuthenticationActions";
 

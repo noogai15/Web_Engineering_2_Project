@@ -1,0 +1,45 @@
+:root {
+  --clr-bg-primary: #0d0e12;
+  --clr-post-secondary: #1c1e24;
+  --clr-text-primary: #c2c2c2;
+  --clr-text-secondary: #9f9f9f;
+  --clr-tags-primary: #797b94;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.main-wrapper-top-menu {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--clr-bg-primary);
+  border-style: solid;
+  border-left: none;
+  border-right: none;
+  border-color: #797b94;
+}
+
+#logo {
+  width: 150px;
+}
+
+#userStatus {
+  color: var(--clr-text-primary);
+  border: var(--clr-text-primary) solid;
+  font-size: 20px;
+  min-width: 100px;
+}
+
+@media only screen and (min-width: 768px) {
+  #logo {
+    width: 200px;
+  }
+}

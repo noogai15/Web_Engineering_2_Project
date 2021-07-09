@@ -17,9 +17,18 @@ const authenticationRouter = require("./endpoints/authentication/AuthenticationR
 const groupsRouter = require("./endpoints/group/GroupRoute");
 const messagesRouter = require("./endpoints/message/MessageRoute");
 
+// global controller
+app.use("/*", function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
+
 app.use(express.json());
 app.use(
-  cors({ allowedHeaders: ["authorization"], exposedHeaders: ["authorization"] })
+  cors({
+    allowedHeaders: ["authorization", "content-type"],
+    exposedHeaders: ["authorization", "content-type"],
+  })
 );
 
 //Use the routes in the folders

@@ -9,16 +9,15 @@ const User = require("../user/UserModel");
 //Create Group
 router.post("/createGroup", function (req, res) {
   const group = new Group({
-    id: req.body.id,
+    id: Math.round(Math.random(100000, 900000)),
     groupName: req.body.groupName,
-    members: [],
+    members: req.body.members,
   });
   group
     .save()
     .then((result) => {
-      res.status(201).json({
-        message: "GROUP CREATED",
-      });
+      res.status(201);
+      res.send(JSON.stringify(result));
     })
     .catch((err) => {
       console.log(err);
@@ -28,25 +27,25 @@ router.post("/createGroup", function (req, res) {
     });
 });
 
-//Create Group
-router.put("/:id", (req, res) => {
-  console.log("Searching for Group to be updated");
-  var conditions = { id: req.params.id };
-  Group.updateOne(conditions, req.body).then((doc) => {
-    if (doc) {
-      console.log("Found Group and updated");
-      res.status(200);
-      return res.send("UPDATED GROUP");
-    }
-    console.log("Couldn't find Group");
-    res.status(404);
-    return res.send("A problem occured");
-  });
-});
+// //Update Group
+// router.put("/:id", (req, res) => {
+//   console.log("Searching for Group to be updated");
+//   var conditions = { id: req.params.id };
+//   Group.updateOne(conditions, req.body).then((doc) => {
+//     if (doc) {
+//       console.log("Found Group and updated");
+//       res.status(200);
+//       return res.send("UPDATED GROUP");
+//     }
+//     console.log("Couldn't find Group");
+//     res.status(404);
+//     return res.send("A problem occured");
+//   });
+// });
 
 //Delete Group
-router.delete("/:id", function (req, res) {
-  var query = Group.findOne({ id: req.params.id });
+router.delete("/", function (req, res) {
+  var query = Group.findOne({ groupName: req.body.groupName });
   query.exec((err, result) => {
     if (err) {
       console.log("Couldn't find Group to delete");
@@ -84,17 +83,21 @@ router.put("/removeLast/:groupID", function (req, res) {
 });
 
 //Subscribe User to Group
-router.put("/subscribeUser/:groupID/:id", function (req, res) {
+router.put("/subscribeUser", function (req, res) {
   var user = null;
   var group = null;
 
-  userService.findUserBy(req.params.id, function (error, foundUser) {
+  userService.findUserBy(req.body.userName, function (error, foundUser) {
+    if (error) {
+      console.log("Error looking for user");
+      return res.status(404);
+    }
     if (foundUser) {
       console.log("Found user");
       user = foundUser;
 
       groupService.findGroupBy(
-        req.params.groupID,
+        req.body.groupName,
         function (error, foundGroup) {
           if (foundGroup) {
             console.log("Found Group, attepting to add User");
@@ -102,7 +105,8 @@ router.put("/subscribeUser/:groupID/:id", function (req, res) {
 
             group.members.push(user);
             group.save();
-            res.send({ Members: group.members });
+            res.status(201);
+            res.send(JSON.stringify(foundGroup));
           } else {
             console.log("Could not find Group");
             return res.status(404);

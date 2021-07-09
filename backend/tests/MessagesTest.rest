@@ -3,8 +3,8 @@ POST http://localhost:8080/message/send
 Content-Type: application/json
 
 {
-    "receiverID": 123,
-    "senderID": 456,
+    "receiverName": 123,
+    "senderName": 456,
     "messageContent": "Test2"
 }
 
@@ -16,8 +16,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 Content-Type: application/json
 
 {
-    "receiverID": 222,
-    "senderID": 456,
+    "receiverName": 222,
+    "senderName": 456,
     "messageContent": "Hallo, wie gehts?"
 }
 
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 ###
 
-//DELETE MESSAGE (WIP; Should only work if the auth User has the senderID)
+//DELETE MESSAGE (WIP; Should only work if the auth User has the senderName)
 //OR maybe just if it's the admin
 DELETE http://localhost:8080/message/60ad6dcc7e64e4364c95aa3f
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
@@ -49,12 +49,12 @@ GET http://localhost:8080/message/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
-//GET INBOX FOR USER (/:receiverID)
+//GET INBOX FOR USER (/:receiverName)
 GET http://localhost:8080/message/inbox/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
-//GET INBOX FOR GROUP (/:receiverID)
+//GET INBOX FOR GROUP (/:receiverName)
 GET http://localhost:8080/message/inbox/111
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 

@@ -1,6 +1,8 @@
 const User = require("./UserModel"); //get UserSchema
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
+var userRoute = require("./UserRoute");
+const Math = require("mathjs");
 
 //Get users from DB
 function getUsers(callback) {
@@ -16,7 +18,7 @@ function getUsers(callback) {
 }
 
 function findUserBy(searchUserName, callback) {
-  console.log("UserService: find User with ID: " + searchUserName);
+  console.log("UserService: find User with userName: " + searchUserName);
 
   if (!searchUserName) {
     callback("No userID");
@@ -25,14 +27,14 @@ function findUserBy(searchUserName, callback) {
     var query = User.findOne({ userName: searchUserName });
     query.exec(function (err, user) {
       if (err) {
-        console.log("Did not find user for userID: " + searchUserName);
+        console.log("Did not find user for userName: " + searchUserName);
         return callback(
-          "Did not find user for userID: " + searchUserName,
+          "Did not find user for userName: " + searchUserName,
           null
         );
       } else {
         if (user) {
-          console.log(`Found userID: ${searchUserName}`);
+          console.log(`Found userName: ${searchUserName}`);
           callback(null, user);
         } else {
           if ("admin" == searchUserName) {
@@ -48,7 +50,7 @@ function findUserBy(searchUserName, callback) {
               }
 
               const adminUser = new User({
-                id: 999,
+                id: Math.round(Math.random(100000, 900000)),
                 password: hash,
                 email: "admin@gmail.com",
                 userName: "Default Administrator Account",
@@ -79,7 +81,37 @@ function findUserBy(searchUserName, callback) {
   }
 }
 
+async function findUserFromArray(userArray, callback) {
+  console.log("Finding users from user array " + userArray);
+  let members = [];
+
+  if (!userArray) {
+    callback("No users given");
+    return;
+  } else {
+    userArray.forEach((user) => {
+      var query = User.findOne({ userName: user.userName });
+      query.exec(function (err, user) {
+        if (err) {
+          console.log("Did not find user for userName: " + user.userName);
+          return callback(
+            "Did not find user for userName: " + user.userName,
+            null
+          );
+        } else {
+          if (user) {
+            console.log(`Found userName: ${user.userName}`);
+            members.push(user);
+          }
+        }
+      });
+    });
+    callback(null, members);
+  }
+}
+
 module.exports = {
   getUsers,
   findUserBy,
+  findUserFromArray,
 };

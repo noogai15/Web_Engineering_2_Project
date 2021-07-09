@@ -1,0 +1,45 @@
+:root {
+  --clr-bg-primary: #0d0e12;
+  --clr-post-secondary: #1c1e24;
+  --clr-locationstext-primary: #312538;
+  --clr-text-secondary: #9f9f9f;
+  --clr-locations-primary: #e97d6c;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.main-wrapper-locations {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.locations-wrapper {
+  display: flex;
+  border-radius: 5px;
+  background-color: var(--clr-locations-primary);
+  color: var(--clr-locationstext-primary);
+}
+
+#locations_name {
+  margin: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#locations_symbol {
+  align-self: center;
+  margin-right: 10px;
+  color: var(--clr-locations-primary);
+}

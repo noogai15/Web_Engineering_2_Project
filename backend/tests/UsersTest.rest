@@ -17,8 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhd
 Content-Type:  application/json
 
 {
-  "id": 765,
-  "userName": "Yakup",
+  "userName": "TTT",
   "email": "ykohne@gmail.com",
   "password": "12345",
   "isAdministrator": false
@@ -32,9 +31,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhd
 Content-Type:  application/json
 
 {
-  "id": 765,
-  "userName": "Ela",
-  "email": "ela@gmail.com",
+  "userName": "IKXGKHGAVSJG",
+  "email": "ykohne@gmail.com",
   "password": "12345",
   "isAdministrator": false
 }
@@ -62,9 +60,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhd
 ###
 
 // DELETE SINGLE USER (AS BASIC USER, SHOULD NOT WORK)
-DELETE  http://localhost:8080/user/60aed1357e5c5f2e44d96133
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhdCI6MTYyMjEzMjU1NSwiZXhwIjoxNjIzNzU0OTg3OTE5fQ.-IzG-rEKV4NrFTMEfz7ic6g2_WXhoHiX9HTxSG6zkEY
+DELETE  http://localhost:8080/user/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozMzc5NDYsImlhdCI6MTYyNTc1MTQ1MiwiZXhwIjoxNjI3Mzc3NTAzOTgwfQ.uE0TpFNFMQrHd_jAphF81gpl5UfYmCLZxU7Nrhlcbdg
+Content-Type:  application/json
 
+{
+  "userName": "aosfsiqauorf"
+}
 ###
 
 //DELETE ALL USERS (WIP)
@@ -73,13 +75,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 
 ###
 
-//UPDATE USER PASSWORD
-PUT   http://localhost:8080/user/123
+//UPDATE USER INFO
+PUT   http://localhost:8080/user/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
 
 {
-  "password": "54321"
+  "userName": "Narwal",
+  "newUserName": "TestNutzer1",
+  "newPassword": "12345"
 }
 
 ###

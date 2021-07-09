@@ -15,11 +15,11 @@ function getGroups(callback) {
 }
 
 //Retrieve Group Members
-function getGroupMembers(groupID, callback) {
+function getGroupMembers(groupName, callback) {
   console.log("GroupService: Find members of Group: " + group);
   var members = null;
 
-  findGroupBy(groupID, function (err, group) {
+  findGroupBy(groupName, function (err, group) {
     if (err) {
       console.log("A problem occured, could not find group");
       callback(err, null);
@@ -40,44 +40,44 @@ function getGroupMembers(groupID, callback) {
   });
 }
 
-function getUsersGroups(userID, callback) {
+function getUsersGroups(userName, callback) {
   console.log("GroupService: Find Groups of User");
 
-  Group.find({ "members.id": Number(userID) }).exec(function (err, groups) {
+  Group.find({ members: String(userName) }).exec(function (err, groups) {
     if (err) {
-      console.log("Could not retrieve Groups of User: " + userID);
+      console.log("Could not retrieve Groups of User: " + userName);
       return callback(err, null);
     } else {
       console.log(
-        "Found the Groups the User // " + userID + " // is subscribed to"
+        "Found the Groups the User // " + userName + " // is subscribed to"
       );
       return callback(null, groups);
     }
   });
 }
 
-function findGroupBy(searchGroupID, callback) {
-  console.log("GroupService: find Group with ID: " + searchGroupID);
+function findGroupBy(searchGroupName, callback) {
+  console.log("GroupService: find Group with groupName: " + searchGroupName);
 
-  if (!searchGroupID) {
-    callback("No groupID");
+  if (!searchGroupName) {
+    callback("No groupName");
     return;
   } else {
-    var query = Group.findOne({ id: searchGroupID });
+    var query = Group.findOne({ groupName: searchGroupName });
     query.exec(function (err, group) {
       if (err) {
-        console.log("Did not find group for groupID: " + searchGroupID);
+        console.log("Did not find group for groupName: " + searchGroupName);
         return callback(
-          "Did not find group for groupID: " + searchGroupID,
+          "Did not find group for groupName: " + searchGroupName,
           null
         );
       } else {
         if (group) {
-          console.log(`Found groupID: ${searchGroupID}`);
+          console.log(`Found groupName: ${searchGroupName}`);
           callback(null, group);
         } else {
-          console.log("Could not find group for groupID: " + searchGroupID);
-          callback(null, group);
+          console.log("Could not find group for groupName: " + searchGroupName);
+          callback(group, null);
         }
       }
     });

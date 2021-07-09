@@ -1,0 +1,137 @@
+:root {
+  --clr-bg-primary: #24272d;
+  --clr-post-secondary: #1c1e24;
+  --clr-text-primary: #c2c2c2;
+  --clr-text-secondary: #9f9f9f;
+  --clr-tags-primary: #797b94;
+  --clr-likes-primary: #d34446;
+  --clr-border-primary: #5b5b5b;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  color: var(--clr-text-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.main-wrapper-private {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-text-primary);
+}
+
+.inbox-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 60px);
+  justify-items: center;
+  justify-content: center;
+  color: var(--clr-text-primary);
+  padding: 20px 10px 0px 10px;
+}
+
+.user-corner-inbox {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 0;
+  padding-left: 10px;
+}
+
+.main-content-inbox {
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+
+.inbox-content {
+  display: grid;
+}
+
+#user_inbox_header {
+  justify-self: start;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+#group_inbox_header {
+  justify-self: start;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.left-sidebar-private {
+  display: flex;
+  background-color: var(--clr-bg-primary);
+  flex-direction: column;
+  padding-left: 10px;
+  border-right: var(--clr-border-primary) solid;
+}
+
+.right-sidebar-private {
+  display: none;
+  background-color: var(--clr-bg-primary);
+  flex-direction: column;
+  justify-self: end;
+  margin-right: 100px;
+}
+
+.user-posts,
+.user-inbox,
+.user-outbox,
+.user-drafts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+span {
+  white-space: nowrap;
+  display: inline;
+  font-size: small;
+  margin: 0;
+}
+
+button {
+  padding: 0;
+  background: none;
+  color: var(--clr-text-primary);
+  border: none;
+  text-align: start;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.private-page-buttons {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .main-wrapper-private {
+    display: grid;
+    grid-template-columns: 200px 1000px auto;
+  }
+
+  .inbox-header {
+    justify-content: start;
+  }
+
+  .right-sidebar-private {
+    display: flex;
+    min-width: auto;
+  }
+
+  .left-sidebar-private {
+    display: flex;
+  }
+
+  .user-corner {
+    display: flex;
+  }
+}

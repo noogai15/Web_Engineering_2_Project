@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
+const Math = require("mathjs");
 
 var userService = require("./UserService");
 const User = require("./UserModel");
@@ -9,39 +10,33 @@ const { isAuthenticated } = require("../authentication/AuthenticationService");
 
 //Create and add user to DB
 router.post("/register", function (req, res, next) {
-  checkIfAdmin(req.headers, (err, user) => {
+  bcrypt.hash(req.body.password, 5, (err, hash) => {
     if (err) {
-      console.log("Authorization error");
-      res.status(503);
-      return res.send("Authorization error");
-    }
-    bcrypt.hash(req.body.password, 5, (err, hash) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          error: err,
-        });
-      } else {
-        const user = new User({
-          id: req.body.id,
-          userName: req.body.userName,
-          email: req.body.email,
-          password: hash,
-          isAdministrator: req.body.isAdministrator,
-        });
-        user
-          .save()
-          .then((result) => {
-            res.status(201).json({
-              message: "USER CREATED",
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-            return res.status(500);
+      console.log(err);
+      return res.status(500).json({
+        error: err,
+      });
+    } else {
+      const user = new User({
+        id: Math.round(Math.random(100000, 900000)),
+        userName: req.body.userName,
+        email: req.body.email,
+        password: hash,
+        isAdministrator: req.body.isAdministrator,
+      });
+      console.log(user.id);
+      user
+        .save()
+        .then((result) => {
+          res.status(201).json({
+            message: "USER CREATED",
           });
-      }
-    });
+        })
+        .catch((err) => {
+          console.log(err);
+          return res.status(500);
+        });
+    }
   });
 });
 
@@ -68,11 +63,7 @@ router.get("/", function (req, res, next) {
   userService.getUsers(function (err, result) {
     console.log("Result: " + result);
     if (result) {
-      res.json(
-        result.map(
-          (user) => "ID: " + user.id + " /// Username: " + user.userName
-        )
-      );
+      res.send(JSON.stringify(result));
     } else {
       res.send("Problem occured");
     }
@@ -105,14 +96,14 @@ router.delete("/deleteAllWithID:id", function (req, res) {
 });
 
 //Delete
-router.delete("/:id", function (req, res) {
+router.delete("/", function (req, res) {
   checkIfAdmin(req.headers, (err, user) => {
     if (err) {
       console.log("Authorization error");
       res.status(503);
       return res.send("Authorization error");
     }
-    User.findByIdAndDelete(req.params.id)
+    User.findOneAndDelete({ userName: req.body.userName })
       .then((doc) => {
         if (!doc) {
           return res.status(404).end();
@@ -139,9 +130,9 @@ router.get("/:id", (req, res) => {
     .catch((err) => next(err));
 });
 
-//UPDATE USER PASSWORD
-router.put("/:id", (req, res) => {
-  let hash = bcrypt.hash(req.body.password, 5, (err, hash) => {
+//UPDATE USER INFO
+router.put("/", (req, res) => {
+  let hash = bcrypt.hash(req.body.newPassword, 5, (err, hash) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -149,13 +140,25 @@ router.put("/:id", (req, res) => {
       });
     }
 
+    let change = {
+      $set: {
+        userName: req.body.newUserName,
+        password: hash,
+      },
+    };
+
     console.log("Searching for User to be updated");
-    var conditions = { id: req.params.id };
-    User.updateOne(conditions, hash).then((doc) => {
+    var conditions = { userName: req.body.userName };
+    User.updateOne(conditions, change).then((doc) => {
       if (doc) {
-        console.log("Found User and updated");
+        let newUserName = req.body.newUserName;
+        let placeHolderId = 000111;
+        const subset = { placeHolderId, newUserName };
+
+        console.log(JSON.stringify(subset));
         res.status(200);
-        return res.send("UPDATED USER");
+        console.log("Found User and updated");
+        return res.send(subset);
       }
       console.log("Couldn't find User");
       res.status(404);

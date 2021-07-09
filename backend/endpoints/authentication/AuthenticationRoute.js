@@ -15,8 +15,8 @@ router.post("/login", function (req, res, next) {
       res.header("Authorization", "Bearer " + token);
 
       if (user) {
-        const { id, userName, ...partialObject } = user;
-        const subset = { id, userName };
+        const { id, userName, isAdministrator, ...partialObject } = user;
+        const subset = { id, userName, isAdministrator };
         console.log(JSON.stringify(subset));
         res.send(subset);
       } else {

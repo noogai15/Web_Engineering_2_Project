@@ -1,0 +1,151 @@
+:root {
+  --clr-bg-primary: #0d0e12;
+  --clr-post-secondary: #1c1e24;
+  --clr-text-primary: #c2c2c2;
+  --clr-text-secondary: #9f9f9f;
+  --clr-tags-primary: #797b94;
+  --clr-likes-primary: #d34446;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.welcome-header {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  margin-bottom: 20px;
+}
+
+#signup_header {
+  margin-bottom: 0;
+  padding-left: 10px;
+  align-self: center;
+}
+
+.main-wrapper {
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-text-primary);
+  display: grid;
+  grid-template-rows: auto auto auto;
+}
+
+.left-sidebar {
+  display: flex;
+  background-color: var(--clr-bg-primary);
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.right-sidebar {
+  display: none;
+  background-color: var(--clr-bg-primary);
+  flex-direction: column;
+}
+
+.main-content {
+  background-color: var(--clr-bg-primary);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 30px;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.user-corner {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+}
+
+.welcome-corner {
+  display: grid;
+  padding: 20px;
+  grid-gap: 20px;
+}
+
+.login-signin {
+  display: flex;
+  flex-direction: row;
+}
+
+.tags-container {
+  display: none;
+  flex-direction: column;
+}
+
+.locations-container {
+  display: none;
+  flex-direction: column;
+}
+
+.profile-link {
+  color: var(--clr-text-secondary);
+}
+
+button {
+  padding: 0;
+  background: none;
+  color: var(--clr-text-primary);
+  border: none;
+  text-align: start;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+#prof_pic {
+  width: auto;
+  height: auto;
+  align-self: center;
+  margin-left: 5px;
+}
+
+#login_button {
+  background-color: var(--clr-post-secondary);
+  border-color: white;
+}
+
+@media only screen and (min-width: 768px) {
+  .user-corner {
+    flex-direction: row;
+  }
+  .right-sidebar {
+    display: flex;
+    max-width: 200px;
+  }
+
+  .main-wrapper {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  .tags-container {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    margin: 20px;
+  }
+
+  .locations-container {
+    display: flex;
+    align-self: flex-start;
+    margin: 20px;
+  }
+
+  .user-corner {
+    padding-bottom: 60px;
+  }
+
+  .main-content {
+    margin-top: 80px;
+  }
+}

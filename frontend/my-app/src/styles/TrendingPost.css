@@ -1,0 +1,24 @@
+:root {
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+  background-color: var(--clr-post-primary);
+}
+
+.main-wrapper-trending-post {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+#post {
+  margin: 0;
+  padding: 0;
+}

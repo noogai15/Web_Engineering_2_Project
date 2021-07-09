@@ -1,9 +1,11 @@
 var mongoose = require("mongoose");
 
 const MessageSchema = new mongoose.Schema({
-  receiverID: { type: Number },
-  senderID: { type: Number },
+  receiverName: { type: String },
+  senderName: { type: String },
+  subject: { type: String },
   messageContent: { type: String },
+  dateSent: { type: String },
 });
 
 const Message = mongoose.model("Message", MessageSchema);

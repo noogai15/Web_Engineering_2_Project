@@ -1,35 +1,44 @@
-import React, { Component } from "react";
-
-import { connect } from "react-redux";
-
+import React from "react";
+import { connect, useSelector } from "react-redux";
+import { Route, Switch, useHistory } from "react-router-dom";
 import "./App.css";
-import TopMenu from "./components/TopMenu";
-import PublicPage from "./components/PublicPage";
 import PrivatePage from "./components/PrivatePage";
+import PublicPage from "./components/PublicPage";
+import PublicPageLogin from "./components/PublicPageLogin";
+import TopMenu from "./components/TopMenu";
 
 const mapStateToProps = (state) => {
-  return state;
+  return state.authenticationReducer;
 };
 
-class App extends Component {
-  render() {
-    const user = this.props.user;
-    let workspace;
+function App() {
+  const history = useHistory();
+  const loggedIn = useSelector((state) => state.authenticationReducer.loggedIn);
+  let startPage;
 
-    //LOGGED IN OR NOT
-    if (user) {
-      workspace = <PrivatePage />;
-    } else {
-      workspace = <PublicPage />;
-    }
-
-    return (
-      <div className="App">
-        <TopMenu />
-        {workspace}
-      </div>
-    );
+  function loginRedirect() {
+    history.push("/");
   }
+
+  //LOGGED IN OR NOT
+  if (loggedIn) {
+    startPage = PublicPageLogin;
+  } else {
+    startPage = PublicPage;
+    loginRedirect();
+  }
+
+  return (
+    <div className="App">
+      <TopMenu />
+      <Switch>
+        {/* Switch looks for the first path and stops on that */}
+        <Route path="/" exact component={startPage} />
+        <Route path="/home" component={startPage} />
+        <Route path="/inbox" component={PrivatePage} />
+      </Switch>
+    </div>
+  );
 }
 
 export default connect(mapStateToProps)(App);

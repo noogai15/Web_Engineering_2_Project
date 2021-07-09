@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import Form from "react-bootstrap/Form";
-
-import { bindActionCreators } from "redux";
-
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as authenticationActions from "../actions/AuthenticationActions";
 
+export const USER_LOGGED_IN = "USER_LOGGED_IN";
+
+export function getUserLoggedIn() {
+  return {
+    type: USER_LOGGED_IN,
+  };
+}
+
 const mapStateToProps = (state) => {
-  return state;
+  return state.authenticationReducer;
 };
 
 class UserSessionWidget extends Component {
@@ -20,7 +25,7 @@ class UserSessionWidget extends Component {
       username: "",
       password: "",
     };
-    this.handleShow = this.handleShow.bind(this);
+    this.handleShow = this.handleShow.bind(this); //bind is for EventHandler stuff
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -58,21 +63,21 @@ class UserSessionWidget extends Component {
 
     return (
       <div>
-        <Button variant="primary" onClick={this.handleShow}>
-          Launch demo modal
+        <Button id="login_button" variant="primary" onClick={this.handleShow}>
+          Login
         </Button>
 
         <Modal show={showDialog} onHide={this.handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Log in</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter email"
+                  placeholder="Enter Username"
                   name="username"
                   onChange={this.handleChange}
                 />

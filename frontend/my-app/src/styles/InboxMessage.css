@@ -1,0 +1,122 @@
+:root {
+  --clr-inbox-message-bg-primary: #1c1e24;
+  --clr-inbox-message-primary: #1c1e24;
+  --clr-inbox-message-secondary: #515769;
+  --clr-text-primary: #c2c2c2;
+  --clr-text-secondary: #9f9f9f;
+  --clr-tags-primary: #797b94;
+  --clr-likes-primary: #d34446;
+  --clr-border-primary: #5b5b5b;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+  background-color: var(--clr-inbox-message-primary);
+}
+
+.main-wrapper-inbox-message {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--clr-inbox-message-bg-primary);
+  color: var(--clr-text-primary);
+  border-bottom: var(--clr-border-primary) solid;
+  border-top: var(--clr-border-primary) solid;
+  border-radius: 0px 5px 5px 0px;
+  margin-top: 40px;
+  flex: 1;
+}
+
+#like_symbol,
+#comments-symbol {
+  margin: 5px;
+  align-self: center;
+  width: auto;
+}
+
+.inbox-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
+}
+
+#like_number,
+#inbox-message-subject,
+#inbox-message-preview,
+#time_inbox_messages {
+  align-self: flex-start;
+  margin: 0px;
+  padding: 2px;
+}
+
+#inbox-message-preview {
+  padding-bottom: 6px;
+}
+
+#time-inbox-messageed {
+  font-size: small;
+}
+
+#like_number {
+  align-self: center;
+}
+
+#inbox-message-subject {
+  text-align: left;
+  color: #7187dd;
+}
+
+.message-time-and-sender {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+#time_inbox_messages {
+  justify-self: start;
+}
+
+#message_sender {
+  justify-self: end;
+}
+
+.like-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px;
+  background-color: var(--clr-inbox-message-secondary);
+}
+
+.inbox-message-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 10px;
+  background-color: var(--clr-inbox-message-secondary);
+  justify-content: center;
+}
+
+@media only screen and (min-width: 768px) {
+  .main-wrapper-inbox-message {
+    max-width: 720px;
+    border-right: var(--clr-border-primary) solid;
+    justify-content: stretch;
+  }
+
+  .inbox-card {
+    justify-content: stretch;
+  }
+}

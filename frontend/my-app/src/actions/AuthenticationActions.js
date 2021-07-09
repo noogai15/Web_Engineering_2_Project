@@ -5,6 +5,15 @@ export const AUTHENTICATION_PENDING = "AUTHENTICATION_PENDING";
 export const AUTHENTICATION_SUCCESS = "AUTHENTICATION_SUCCESS";
 export const AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR";
 
+export const LOGOUT_ACTION = "LOGOUT_ACTION";
+
+export const GET_ALL_USERS_SUCCESS = "GET_ALL_USERS_SUCCESS";
+export const GET_ALL_USERS_ERROR = "GET_ALL_USERS_ERROR";
+
+//TODO: Maybe use state here instead?
+export var user = "";
+export var token = "";
+
 export function getShowLoginDialogAction() {
   return {
     type: SHOW_LOGIN_DIALOG,
@@ -38,12 +47,32 @@ export function getAuthenticationErrorAction(error) {
   };
 }
 
-export function authenticateUser(userID, password) {
+export function getLogoutAction() {
+  return {
+    type: LOGOUT_ACTION,
+  };
+}
+
+export function getAllUsersSuccess(users) {
+  return {
+    type: GET_ALL_USERS_SUCCESS,
+    allUsers: users,
+  };
+}
+
+export function getAllUsersError(error) {
+  return {
+    type: GET_ALL_USERS_ERROR,
+    error: error,
+  };
+}
+
+export function authenticateUser(userName, password) {
   console.log("Authenticate");
 
   return (dispatch) => {
     dispatch(getAuthenticateUserPendingAction());
-    login(userID, password)
+    login(userName, password)
       .then(
         (userSession) => {
           dispatch(getAuthenticationSuccessAction(userSession));
@@ -58,12 +87,19 @@ export function authenticateUser(userID, password) {
   };
 }
 
-export function login(userID, password) {
-  let cred = btoa(`${userID}:${password}`);
+export function logout() {
+  return (dispatch) => {
+    console.log("Dispatching Logout");
+    dispatch(getLogoutAction());
+  };
+}
+
+export function login(userName, password) {
+  let cred = btoa(`${userName}:${password}`);
+  user = userName;
   const requestOptions = {
     method: "POST",
-    //headers: { "Content-Type": "application/json" },
-    //body: JSON.stringify({ userID, password }),
+
     headers: { Authorization: "Basic " + cred },
   };
   return fetch("http://localhost:8080/authenticate/login", requestOptions)
@@ -71,6 +107,41 @@ export function login(userID, password) {
     .then((userSession) => {
       return userSession;
     });
+}
+
+export function getAllUsers() {
+  console.log("Attempting to get all users");
+  return (dispatch) => {
+    allUsers()
+      .then(
+        (users) => {
+          dispatch(getAllUsersSuccess(users));
+        },
+        (error) => {
+          dispatch(getAllUsersError(error));
+        }
+      )
+      .catch((error) => {
+        dispatch(getAllUsersError(error));
+      });
+  };
+}
+
+function allUsers() {
+  const requestOptions = {
+    method: "GET",
+    //headers: { Authorization: "Basic " + cred },
+  };
+  return fetch("http://localhost:8080/user", requestOptions).then(
+    (response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.log("Could not get proper response");
+        return;
+      }
+    }
+  );
 }
 
 function handleResponse(response) {
@@ -100,8 +171,4 @@ function handleResponse(response) {
       }
     }
   });
-}
-
-export function logout() {
-  console.error("Should logout user");
 }

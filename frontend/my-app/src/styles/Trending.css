@@ -1,0 +1,62 @@
+:root {
+  --clr-post-primary: #0d0e12;
+  --clr-text-secondary: #9f9f9f;
+  --clr-tags-primary: #797b94;
+  --clr-likes-primary: #d34446;
+  --clr-border-primary: #5b5b5b;
+  --clr-trending-primary: #332a45;
+  --clr-trending-secondary: #312538;
+  --clr-trending-border: #4a304a;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+
+body {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  margin: 0;
+  background-color: var(--clr-post-primary);
+}
+
+.main-wrapper-trending {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  padding-top: 100px;
+  align-self: flex-start;
+  min-width: 250px;
+}
+
+.trending-today,
+.trending-yesterday {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  border-style: solid;
+  border-color: var(--clr-trending-border);
+}
+
+.trending-yesterday {
+  border-top: 0;
+}
+
+#header-trending-today,
+#header-trending-yesterday {
+  font-size: large;
+  margin: 0;
+  padding: 8px;
+  text-align: start;
+  background-color: var(--clr-trending-primary);
+  border-color: var(--clr-trending-border);
+}
+
+.posts-trending-today,
+.posts-trending-yesterday {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 14px;
+  border-top: var(--clr-trending-border) solid;
+  background-color: var(--clr-trending-secondary);
+}

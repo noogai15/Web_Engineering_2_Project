@@ -3,7 +3,7 @@
 // 1. AUTOMATISCHES ERSTELLEN UND LOGIN EINES ADMINISTRATORS
 //TODO: CHANGE IT TO LOGIN WITH A JSON BODY
 POST http://localhost:8080/authenticate/login
-Authorization: Basic OTk5OjEyMzQ1
+Authorization: Basic VGVzdE51dHplcjE6MTIzNDU=
 
 ###
 
@@ -13,11 +13,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhd
 Content-Type:  application/json
 
 {
-  "id": 909090,
-  "userName": "Yakup",
+  "userName": "aosfsiqauorf",
   "email": "test@gmail.com",
-  "password": "12345",
-  "isAdministrator": false
+  "password": "12345"
 }
 
 ###
@@ -34,17 +32,21 @@ POST http://localhost:8080/group/createGroup
 Content-Type: application/json
 
 {
-    "id": 202020,
-    "groupName": "Test Gruppe",
+    "groupName": "Test Gruppe 4",
     "members": []
 }
 
 ###
 
-//5 NUTZER GRUPPE HINZUFÜGEN /:Gruppe ID/:Nutzer ID
-PUT http://localhost:8080/group/subscribeUser/202020/506070
+//5 NUTZER GRUPPE HINZUFÜGEN
+PUT http://localhost:8080/group/subscribeUser/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type: application/json
 
+{
+    "members": [], 
+    "groupName": "Test Group"
+}
 ###
 
 //6. AUFLISTEN DER GRUPPEN
@@ -59,9 +61,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 Content-Type: application/json
 
 {
-    "receiverID": 506070,
-    "senderID": 999,
-    "messageContent": "Hallo TestNutzer 1, ich bin der Admin"
+    "receiverName": "Admin",
+    "senderName": "noogai15",
+    "subject":"Hallo Admin",
+    "messageContent": "Hallo!"
 }
 
 ###
@@ -72,28 +75,29 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 Content-Type: application/json
 
 {
-    "receiverID": 202020,
-    "senderID": 999,
-    "messageContent": "Hallo Test Gruppe, ich bin der Admin"
+    "receiverName": "Frontend Test Group",
+    "senderName": "Admin",
+    "subject":"Bitte antworten",
+    "messageContent": "GROUP TEST MESSAGE"
 }
 
 ###
 
-//8.1 AUFLISTEN DER NACHRICHTEN FÜR DEN NUTZER /:Nutzer ID
-GET http://localhost:8080/message/inbox/506070
+//8.1 AUFLISTEN DER NACHRICHTEN FÜR DEN NUTZER /:Nutzer Name
+GET http://localhost:8080/message/inbox/TestNutzer1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //8.2 AUFLISTEN DER NACHRICHTEN FÜR DIE GRUPPE /: Gruppe ID
-GET http://localhost:8080/message/inbox/202020
+GET http://localhost:8080/message/inbox/Frontend Test Group
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //8.3 AUFLISTEN DER NACHRICHTEN IN DEN GRUPPE,
 // IN WELCHER SICH DER NUTZER BEFINDET /: Nutzer ID
-GET http://localhost:8080/message/groupInbox/506070
+GET http://localhost:8080/message/groupInbox/noogai15
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
@@ -115,8 +119,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 
 ###
 
-//11. GRUPPE LÖSCHEN /:Gruppe ID
-DELETE http://localhost:8080/group/202020
+//11. GRUPPE LÖSCHEN
+DELETE http://localhost:8080/group/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type:  application/json
 
+{
+  "groupName": "Frontend Test Group 2"
+}
 

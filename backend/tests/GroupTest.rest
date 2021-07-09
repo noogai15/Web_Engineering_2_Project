@@ -3,8 +3,7 @@ POST http://localhost:8080/group/createGroup
 Content-Type: application/json
 
 {
-    "id": 202020,
-    "groupName": "Group 3",
+    "groupName": "Test Group",
     "members": []
 }
 
@@ -37,9 +36,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb
 
 ###
 
-//SUBSCRIBE USER TO GROUP /groupID/userID
-PUT http://localhost:8080/group/subscribeUser/111/456
+//SUBSCRIBE USER TO GROUP
+PUT http://localhost:8080/group/subscribeUser
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type: application/json
+
+{
+    "userName": "TestNutzer1",
+    "groupName": "Test Group"
+}
 ###
 
 //GET GROUPS THE USER IS SUBSCIBED TO
