@@ -48,7 +48,7 @@ function checkIfAdmin(header, callback) {
       console.log("UserRoute: Could not get User from header");
       return callback(err, null);
     }
-    if (result.isAdministrator == false) {
+    if (result && result.isAdministrator == false) {
       console.log("UserRoute: User is not authorized for this action");
       err = "Not authorized"; //Making err != null so that err check when calling this function can be both if(err) or if(!result)
       return callback(err, null);
@@ -96,28 +96,29 @@ router.delete("/deleteAllWithID:id", function (req, res) {
 });
 
 //Delete
-router.delete("/", function (req, res) {
+router.delete("/", function (req, res, next) {
   checkIfAdmin(req.headers, (err, user) => {
     if (err) {
       console.log("Authorization error");
       res.status(503);
       return res.send("Authorization error");
     }
-    User.findOneAndDelete({ userName: req.body.userName })
+    User.deleteOne({ userName: req.body.userName })
       .then((doc) => {
         if (!doc) {
           return res.status(404).end();
         }
 
-        return res.send(doc + "\n\nDELETED USER");
+        console.log("USER DELETED");
+        return res.send(JSON.stringify(doc));
       })
       .catch((err) => next(err));
-    console.log("USER DELETED");
   });
 });
 
 //Find user
-router.get("/:id", (req, res) => {
+router.get("/:id", (req, res, next) => {
+  if (typeof req.params.id != Number) return res.status(404).end();
   User.find({ id: req.params.id })
     .then((doc) => {
       if (!doc) {

@@ -1,11 +1,17 @@
 import React from "react";
+import { MdDeleteForever } from "react-icons/md";
+import { connect, useDispatch } from "react-redux";
+import { dispatchDeleteMessage } from "../actions/MessageActions";
 import profPic2 from "../images/userProfPic2.png";
 import "../styles/InboxMessage.css";
 
-function InboxMessage(props) {
-  // const [sender, setSender] = useState();
-  // const [content, setContent] = useState();
+function mapStateToProps(state) {
+  return state;
+}
 
+function InboxMessage(props) {
+  const dispatch = useDispatch();
+  const userName = props.authenticationReducer.user.userName;
   return (
     <div className="main-wrapper-inbox-message">
       <div className="inbox-card">
@@ -19,8 +25,17 @@ function InboxMessage(props) {
           </div>
         </div>
       </div>
+      <div className="delete-icon">
+        <button
+          onClick={() => {
+            dispatch(dispatchDeleteMessage(props._id, userName));
+          }}
+        >
+          <MdDeleteForever />
+        </button>
+      </div>
     </div>
   );
 }
-
-export default InboxMessage;
+const ConnectedInboxMessage = connect(mapStateToProps, null)(InboxMessage);
+export default ConnectedInboxMessage;

@@ -1,19 +1,18 @@
 //Eine Mögliche Reihenfolge von Tests, welche die wichtigsten Funktionen der Entitäten vorstellen:
 
 // 1. AUTOMATISCHES ERSTELLEN UND LOGIN EINES ADMINISTRATORS
-//TODO: CHANGE IT TO LOGIN WITH A JSON BODY
-POST http://localhost:8080/authenticate/login
+POST https://localhost:8080/authenticate/login
 Authorization: Basic VGVzdE51dHplcjE6MTIzNDU=
 
 ###
 
 // 2. NUTZER ERSTELLEN (Im Header den in Schritt 1. erstellten Session Key eingeben, da es nur Admins erlaubt ist)
-POST http://localhost:8080/user/register
+POST https://localhost:8080/user/register
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhdCI6MTYyMjE0ODU2MCwiZXhwIjoxNjIzNzcxMDA4NTYzfQ.TbLKw46neDqr4BYUNdheL43iko-DlYz_6RoBKEnko7k
 Content-Type:  application/json
 
 {
-  "userName": "aosfsiqauorf",
+  "userName": "Yakup",
   "email": "test@gmail.com",
   "password": "12345"
 }
@@ -22,13 +21,13 @@ Content-Type:  application/json
 
 // 3. ALLE NUTZER AUFLISTEN 
 //(Nur Admin und TestNutzer1 werden angezeigt)
-GET http://localhost:8080/user
+GET https://localhost:8080/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //4. ANLEGEN EINER GRUPPE
-POST http://localhost:8080/group/createGroup
+POST https://localhost:8080/group/createGroup
 Content-Type: application/json
 
 {
@@ -39,7 +38,7 @@ Content-Type: application/json
 ###
 
 //5 NUTZER GRUPPE HINZUFÜGEN
-PUT http://localhost:8080/group/subscribeUser/
+PUT https://localhost:8080/group/subscribeUser/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type: application/json
 
@@ -50,13 +49,13 @@ Content-Type: application/json
 ###
 
 //6. AUFLISTEN DER GRUPPEN
-GET http://localhost:8080/group
+GET https://localhost:8080/group
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //7.1 ANLEGEN EINER NACHRICHT FÜR EINEN NUTZER
-POST http://localhost:8080/message/send
+POST https://localhost:8080/message/send
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type: application/json
 
@@ -70,7 +69,7 @@ Content-Type: application/json
 ###
 
 //7.2 ANLEGEN EINER NACHRICHT FÜR EINE GRUPPE
-POST http://localhost:8080/message/send
+POST https://localhost:8080/message/send
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type: application/json
 
@@ -84,26 +83,26 @@ Content-Type: application/json
 ###
 
 //8.1 AUFLISTEN DER NACHRICHTEN FÜR DEN NUTZER /:Nutzer Name
-GET http://localhost:8080/message/inbox/TestNutzer1
+GET https://localhost:8080/message/inbox/TestNutzer1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //8.2 AUFLISTEN DER NACHRICHTEN FÜR DIE GRUPPE /: Gruppe ID
-GET http://localhost:8080/message/inbox/Frontend Test Group
+GET https://localhost:8080/message/inbox/Frontend Test Group
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //8.3 AUFLISTEN DER NACHRICHTEN IN DEN GRUPPE,
 // IN WELCHER SICH DER NUTZER BEFINDET /: Nutzer ID
-GET http://localhost:8080/message/groupInbox/noogai15
+GET https://localhost:8080/message/groupInbox/noogai15
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //9. NUTZER PASSWORT ÄNDERN /:Nutzer ID
-PUT http://localhost:8080/user/506070
+PUT https://localhost:8080/user/506070
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
 
@@ -114,13 +113,13 @@ Content-Type:  application/json
 ###
 
 //10 ZULETZT ZUGEFÜGTEN NUTZER ENTFERNEN /:Gruppe ID
-PUT http://localhost:8080/group/removeLast/202020
+PUT https://localhost:8080/group/removeLast/202020
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //11. GRUPPE LÖSCHEN
-DELETE http://localhost:8080/group/
+DELETE https://localhost:8080/group/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
 

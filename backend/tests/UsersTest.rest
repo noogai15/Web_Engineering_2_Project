@@ -1,23 +1,23 @@
 
 // FIND ALL USERS
-GET http://localhost:8080/user
+GET https://localhost:8080/user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //GET SINGLE USER
-GET http://localhost:8080/user/123
+GET https://localhost:8080/user/6180770ab0b07b4f88315e1a
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 // CREATE USER (AS ADMIN, SHOULD WORK)
-POST http://localhost:8080/user/register
+POST https://localhost:8080/user/register
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhdCI6MTYyMjEzMjQ4NiwiZXhwIjoxNjIzNzU0OTE4OTY3fQ.Z3b9U00xfssIlWo4bdW7u_whDPasTRBRkNMFbTBr0S8
 Content-Type:  application/json
 
 {
-  "userName": "TTT",
+  "userName": "TTTasd",
   "email": "ykohne@gmail.com",
   "password": "12345",
   "isAdministrator": false
@@ -26,12 +26,12 @@ Content-Type:  application/json
 ###
 
 // CREATE USER (AS BASIC USER, SHOULD NOT WORK)
-POST http://localhost:8080/user/register
+POST https://localhost:8080/user/register
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoxMjMsImlhdCI6MTYyMjEzMjU1NSwiZXhwIjoxNjIzNzU0OTg3OTE5fQ.-IzG-rEKV4NrFTMEfz7ic6g2_WXhoHiX9HTxSG6zkEY
 Content-Type:  application/json
 
 {
-  "userName": "IKXGKHGAVSJG",
+  "userName": "adjsssssd",
   "email": "ykohne@gmail.com",
   "password": "12345",
   "isAdministrator": false
@@ -40,7 +40,7 @@ Content-Type:  application/json
 ###
 
 //CREATE ADMIN
-POST http://localhost:8080/user/register
+POST https://localhost:8080/user/register
 Content-Type:  application/json
 
 {
@@ -54,29 +54,29 @@ Content-Type:  application/json
 ###
 
 // DELETE SINGLE USER (AS ADMIN, SHOULD WORK)
-DELETE  http://localhost:8080/user/60aed1357e5c5f2e44d96133
+DELETE  https://localhost:8080/user/60aed1357e5c5f2e44d96133
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjo5OTksImlhdCI6MTYyMjEzMjQ4NiwiZXhwIjoxNjIzNzU0OTE4OTY3fQ.Z3b9U00xfssIlWo4bdW7u_whDPasTRBRkNMFbTBr0S8
 
 ###
 
 // DELETE SINGLE USER (AS BASIC USER, SHOULD NOT WORK)
-DELETE  http://localhost:8080/user/
+DELETE  https://localhost:8080/user/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjozMzc5NDYsImlhdCI6MTYyNTc1MTQ1MiwiZXhwIjoxNjI3Mzc3NTAzOTgwfQ.uE0TpFNFMQrHd_jAphF81gpl5UfYmCLZxU7Nrhlcbdg
 Content-Type:  application/json
 
 {
-  "userName": "aosfsiqauorf"
+  "userName": "sjds"
 }
 ###
 
 //DELETE ALL USERS (WIP)
-DELETE http://localhost:8080/user/deleteAllWithID/UserTest
+DELETE https://localhost:8080/user/deleteAllWithID/UserTest
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //UPDATE USER INFO
-PUT   http://localhost:8080/user/
+PUT   https://localhost:8080/user/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type:  application/json
 

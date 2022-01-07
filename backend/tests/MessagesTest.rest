@@ -1,5 +1,5 @@
 //CREATE (SEND) MESSAGE TO USER
-POST http://localhost:8080/message/send
+POST https://localhost:8080/message/send
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
 ###
 
 //CREATE (SEND) MESSAGE TO GROUP
-POST http://localhost:8080/message/send
+POST https://localhost:8080/message/send
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type: application/json
 
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 //UPDATE MESSAGE (BY ID)
-PUT http://localhost:8080/message/60afb77307ffbd255b4f53680
+PUT https://localhost:8080/message/60afb77307ffbd255b4f53680
 Content-Type: application/json
 
 {
@@ -35,36 +35,37 @@ Content-Type: application/json
 
 //DELETE MESSAGE (WIP; Should only work if the auth User has the senderName)
 //OR maybe just if it's the admin
-DELETE http://localhost:8080/message/60ad6dcc7e64e4364c95aa3f
+DELETE https://localhost:8080/message/61656428c6aa6b4dd4d09144
+
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 ###
 
 //GET SINGLE MESSAGE BY ID
-GET http://localhost:8080/message/60afb77307ffbd55b4f53680
+GET https://localhost:8080/message/60afb77307ffbd55b4f53680
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 //GET ALL MESSAGES
-GET http://localhost:8080/message/
+GET https://localhost:8080/message/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 //GET INBOX FOR USER (/:receiverName)
-GET http://localhost:8080/message/inbox/123
+GET https://localhost:8080/message/inbox/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 //GET INBOX FOR GROUP (/:receiverName)
-GET http://localhost:8080/message/inbox/111
+GET https://localhost:8080/message/inbox/111
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 //GET SENT MESSAGES FOR USER
-GET http://localhost:8080/message/sent/123
+GET https://localhost:8080/message/sent/123
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 //GET MESSAGES OF A USERS GROUPS
-GET http://localhost:8080/message/groupInbox/456
+GET https://localhost:8080/message/groupInbox/456
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 

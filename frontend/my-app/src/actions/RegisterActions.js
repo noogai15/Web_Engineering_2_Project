@@ -71,24 +71,25 @@ export function registerUser(newUsername, newPassword) {
     }),
   };
 
-  return fetch("http://localhost:8080/user/register", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        response.json();
-      } else {
-        console.log("Could not get proper response");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "user/register",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      response.json();
+    } else {
+      console.log("Could not get proper response");
+      return;
     }
-  );
+  });
 }
 
-export function getRegisterGroup(groupName, members) {
+export function getRegisterGroup(groupName, members, token) {
   console.log("Attempting to create Group");
   return (dispatch) => {
     dispatch(getGroupCreateGroupPendingAction());
 
-    registerGroup(groupName, members)
+    registerGroup(groupName, members, token)
       .then(
         (group) => {
           dispatch(getGroupCreateGroupSuccessAction(group));
@@ -103,25 +104,28 @@ export function getRegisterGroup(groupName, members) {
   };
 }
 
-function registerGroup(groupName, members) {
+function registerGroup(groupName, members, token) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       groupName: groupName,
       members: members,
     }),
   };
-  return fetch("http://localhost:8080/group/createGroup", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        console.log("Could not get proper response");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "group/createGroup",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get proper response");
+      return;
     }
-  );
+  });
 }
 
 function subscribeUserToGroup(members, groupName) {
@@ -135,7 +139,7 @@ function subscribeUserToGroup(members, groupName) {
   };
 
   return fetch(
-    "http://localhost:8080/group/subscribeUser",
+    process.env.REACT_APP_BACKEND_ROUTE + "group/subscribeUser",
     requestOptions
   ).then((response) => {
     if (response.ok) {

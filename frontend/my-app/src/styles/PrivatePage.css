@@ -11,6 +11,16 @@
   --ff-secondary: "Mukta Vaani", sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: var(--ff-primary);
   color: var(--clr-text-primary);
@@ -35,7 +45,6 @@ body {
   color: var(--clr-text-primary);
   padding: 20px 10px 0px 10px;
 }
-
 .user-corner-inbox {
   display: flex;
   flex-direction: row;
@@ -56,6 +65,10 @@ body {
   justify-self: start;
   margin: 0;
   padding: 5px 10px;
+}
+
+#userGroups {
+  color: #cc4042;
 }
 
 #group_inbox_header {
@@ -106,10 +119,23 @@ button {
   word-wrap: break-word;
 }
 
+.delete-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
 .private-page-buttons {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+
   grid-gap: 20px;
+}
+
+.group_inbox_wrapper {
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-self: start;
+  align-items: center;
 }
 
 @media only screen and (min-width: 768px) {

@@ -28,6 +28,11 @@ export function messagesReducer(state = initialState, action) {
         groupMessages: action.groupInbox,
         error: null,
       };
+    case messageActions.DELETE_MESSAGE_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
     default:
       return state;
   }

@@ -20,6 +20,7 @@ const messagesRouter = require("./endpoints/message/MessageRoute");
 // global controller
 app.use("/*", function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Header", "Content-Type");
   next();
 });
 
@@ -55,6 +56,10 @@ app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-app.listen(8080, () => {
-  console.log("Server started on Port 8080");
+app.get("/", (req, res) => {
+  res.send("this is an secure server");
+});
+
+server.listen(8080, () => {
+  console.log("Secure server started on Port 8080");
 });

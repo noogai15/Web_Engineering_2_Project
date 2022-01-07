@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
-import { applyMiddleware, createStore } from "redux";
+import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
@@ -15,11 +15,11 @@ import reportWebVitals from "./reportWebVitals";
 const initialState = {};
 
 const middlewares = [thunk];
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   rootReducer,
-  initialState,
-  applyMiddleware(...middlewares)
+  composeEnhancer(applyMiddleware(...middlewares))
 );
 
 ReactDOM.render(

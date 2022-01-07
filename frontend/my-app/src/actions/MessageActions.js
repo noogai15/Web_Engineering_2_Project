@@ -4,6 +4,7 @@ export const USER_INBOX_SUCCESS = "USER_INBOX_SUCCESS";
 export const USER_INBOX_ERROR = "USER_INBOX_ERROR";
 export const GROUP_INBOX_SUCCESS = "GROUP_INBOX_SUCCESS";
 export const GROUP_INBOX_ERROR = "GROUP_INBOX_ERROR";
+export const DELETE_MESSAGE_ERROR = "DELETE_MESSAGE_ERROR";
 
 export function getMessagesSuccessAction() {
   return {
@@ -47,9 +48,14 @@ export function getGroupInboxError(messages) {
   };
 }
 
+export function deleteMessageError(error) {
+  return {
+    type: DELETE_MESSAGE_ERROR,
+    error,
+  };
+}
 export function getUserMessages(userName) {
   console.log("Attempting to get all User Messages");
-
   return (dispatch) => {
     userInbox(userName)
       .then(
@@ -61,9 +67,43 @@ export function getUserMessages(userName) {
         }
       )
       .catch((error) => {
+        dispatch(getUserInboxError(error));
+      });
+  };
+}
+export function getGroupMessages(userName) {
+  console.log("Attempting to get this users groups messages");
+  return (dispatch) => {
+    groupMessages(userName)
+      .then(
+        (groupMessages) => {
+          dispatch(getGroupInboxSuccess(groupMessages));
+        },
+        (error) => {
+          dispatch(getGroupInboxError(error));
+        }
+      )
+      .catch((error) => {
         dispatch(getGroupInboxError(error));
       });
   };
+}
+function groupMessages(userName) {
+  const requestOptions = {
+    method: "GET",
+    //header: { Authorization: "Bearer " + userName },
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "message/groupInbox/" + userName,
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get proper response");
+      return;
+    }
+  });
 }
 
 function userInbox(userName) {
@@ -73,7 +113,7 @@ function userInbox(userName) {
   };
 
   return fetch(
-    "http://localhost:8080/message/inbox/" + userName,
+    process.env.REACT_APP_BACKEND_ROUTE + "message/inbox/" + userName,
     requestOptions
   ).then((response) => {
     if (response.ok) {
@@ -85,93 +125,117 @@ function userInbox(userName) {
   });
 }
 
-export function getGroupMessages(userName) {
-  console.log("Attempting to get this users groups messages");
+export function dispatchDeleteMessage(_id, userName, groupName) {
   return (dispatch) => {
-    groupMessages(userName).then(
-      (groupMessages) => {
-        dispatch(getGroupInboxSuccess(groupMessages));
+    deleteMessage(_id).then(
+      (success) => {
+        dispatch(getUserMessages(userName));
+        dispatch(getGroupMessages(userName));
       },
       (error) => {
-        dispatch(getGroupInboxError(error));
+        dispatch(deleteMessageError(error));
       }
     );
   };
 }
 
-//Gets Group messages that the User is subscribed to
-function groupMessages(userName) {
+export function deleteMessage(_id) {
   const requestOptions = {
-    method: "GET",
-    //header: { Authorization: "Bearer " + userName },
+    method: "DELETE",
   };
   return fetch(
-    "http://localhost:8080/message/groupInbox/" + userName,
+    process.env.REACT_APP_BACKEND_ROUTE + "message/" + _id,
     requestOptions
   ).then((response) => {
     if (response.ok) {
-      return response.json();
+      return _id;
     } else {
-      console.log("Could not get proper response");
+      console.log("Could not get proper response, Message not deleted");
+      return;
+    }
+  });
+}
+export function sendUserMessage(receiver, sender, subject, content, token) {
+  let messageInfo = {
+    receiver: receiver,
+    sender: sender,
+    subject: subject,
+    content: content,
+  };
+
+  console.log("Attempting to send message to User:" + messageInfo.receiver);
+  return (dispatch) => {
+    userMessage(messageInfo, token)
+      .then(
+        (success) => {
+          dispatch(getMessagesSuccessAction());
+        },
+        (error) => {
+          dispatch(getMessagesErrorAction(error));
+        }
+      )
+      .catch((error) => {
+        dispatch(getMessagesErrorAction(error));
+      });
+  };
+}
+
+export function sendGroupMessage(receiver, sender, subject, content, token) {
+  let messageInfo = {
+    receiver: receiver,
+    sender: sender,
+    subject: subject,
+    content: content,
+  };
+
+  console.log("Attempting to send message to User:" + messageInfo.receiver);
+  return (dispatch) => {
+    groupMessage(messageInfo, token)
+      .then(
+        (success) => {
+          dispatch(getMessagesSuccessAction());
+        },
+        (error) => {
+          dispatch(getMessagesErrorAction(error));
+        }
+      )
+      .catch((error) => {
+        dispatch(getMessagesErrorAction(error));
+      });
+  };
+}
+
+function userMessage(messageInfo, token) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      receiverName: messageInfo.receiver,
+      senderName: messageInfo.sender,
+      subject: messageInfo.subject,
+      messageContent: messageInfo.content,
+    }),
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "message/send",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      response.json();
+    } else {
+      console.log("Could not send message");
       return;
     }
   });
 }
 
-export function sendUserMessage(receiver, sender, subject, content) {
-  let messageInfo = {
-    receiver: receiver,
-    sender: sender,
-    subject: subject,
-    content: content,
-  };
-
-  console.log("Attempting to send message to User:" + messageInfo.receiver);
-  return (dispatch) => {
-    userMessage(messageInfo)
-      .then(
-        (success) => {
-          dispatch(getMessagesSuccessAction());
-        },
-        (error) => {
-          dispatch(getMessagesErrorAction(error));
-        }
-      )
-      .catch((error) => {
-        dispatch(getMessagesErrorAction(error));
-      });
-  };
-}
-
-export function sendGroupMessage(receiver, sender, subject, content) {
-  let messageInfo = {
-    receiver: receiver,
-    sender: sender,
-    subject: subject,
-    content: content,
-  };
-
-  console.log("Attempting to send message to User:" + messageInfo.receiver);
-  return (dispatch) => {
-    groupMessage(messageInfo)
-      .then(
-        (success) => {
-          dispatch(getMessagesSuccessAction());
-        },
-        (error) => {
-          dispatch(getMessagesErrorAction(error));
-        }
-      )
-      .catch((error) => {
-        dispatch(getMessagesErrorAction(error));
-      });
-  };
-}
-
-function userMessage(messageInfo) {
+function groupMessage(messageInfo, token) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+
     body: JSON.stringify({
       receiverName: messageInfo.receiver,
       senderName: messageInfo.sender,
@@ -179,39 +243,17 @@ function userMessage(messageInfo) {
       messageContent: messageInfo.content,
     }),
   };
-  return fetch("http://localhost:8080/message/send", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        response.json();
-      } else {
-        console.log("Could not send message");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "message/send",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      response.json();
+    } else {
+      console.log("Could not send message");
+      return;
     }
-  );
-}
-
-function groupMessage(messageInfo) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      receiverName: messageInfo.receiver,
-      senderName: messageInfo.sender,
-      subject: messageInfo.subject,
-      messageContent: messageInfo.content,
-    }),
-  };
-  return fetch("http://localhost:8080/message/send", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        response.json();
-      } else {
-        console.log("Could not send message");
-        return;
-      }
-    }
-  );
+  });
 }
 
 // export function getAllMessages() {

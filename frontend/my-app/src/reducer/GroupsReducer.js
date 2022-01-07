@@ -1,4 +1,5 @@
 import * as registerActions from "../actions/RegisterActions";
+import * as userActions from "../actions/UserActions";
 
 const initialState = {
   allGroups: [],
@@ -23,6 +24,26 @@ export function groupsReducer(state = initialState, action) {
         pending: false,
         error: null,
       };
+    case userActions.GET_ALL_GROUPS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        allGroups: action.groups,
+        error: null,
+      };
+    case userActions.GET_ALL_GROUPS_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: null,
+      };
+    case userActions.GET_ALL_GROUPS_ERROR:
+      return {
+        state,
+        pending: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }

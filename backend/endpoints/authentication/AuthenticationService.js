@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 var config = require("config");
 
-function isAuthenticated(req, res, next) {
+function isAuthenticated(req, res) {
   const bearerHeader = req.headers.authorization;
 
   if (typeof bearerHeader !== undefined) {
@@ -12,11 +12,11 @@ function isAuthenticated(req, res, next) {
         res.status(500).json({ error: "Not authorized" });
         return;
       }
-      return next();
+      return true;
     });
   } else {
     res.sendStatus(500).json({ error: "Not authorized" });
-    return;
+    return false;
   }
 }
 

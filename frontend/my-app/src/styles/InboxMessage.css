@@ -24,6 +24,7 @@ body {
 .main-wrapper-inbox-message {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   background-color: var(--clr-inbox-message-bg-primary);
   color: var(--clr-text-primary);
   border-bottom: var(--clr-border-primary) solid;
@@ -77,13 +78,20 @@ body {
   display: grid;
   grid-template-columns: auto auto;
 }
+.message_sender > #time_inbox_messages {
+  justify-self: center;
+}
 
-#time_inbox_messages {
-  justify-self: start;
+.message-time-and-sender > * {
+  align-self: center;
 }
 
 #message_sender {
-  justify-self: end;
+  margin-left: 8px;
+}
+
+button {
+  margin: 8px 8px 8px;
 }
 
 .like-container {
@@ -108,12 +116,10 @@ body {
   background-color: var(--clr-inbox-message-secondary);
   justify-content: center;
 }
-
 @media only screen and (min-width: 768px) {
   .main-wrapper-inbox-message {
     max-width: 720px;
     border-right: var(--clr-border-primary) solid;
-    justify-content: stretch;
   }
 
   .inbox-card {

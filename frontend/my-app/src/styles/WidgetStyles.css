@@ -1,4 +1,67 @@
+:root {
+  --clr-post-bg-primary: #1c1e24;
+  --clr-post-primary: #1c1e24;
+  --clr-post-secondary: #515769;
+  --clr-text-primary: #c2c2c2;
+  --clr-text-secondary: #9f9f9f;
+  --clr-tags-primary: #797b94;
+  --clr-likes-primary: #d34446;
+  --clr-border-primary: #5b5b5b;
+
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Mukta Vaani", sans-serif;
+}
+.row-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+body,
+.info-row {
+  font-family: var(--ff-primary);
+  font-weight: 300;
+  font-size: 1.312rem;
+  line-height: 1.6;
+  margin: 0;
+}
 #send_message_button {
   margin-left: 20px;
   margin-bottom: 20px;
+}
+.user-manage-rows {
+  display: flex;
+  flex-direction: column;
+  font-family: serif;
+  color: black;
+}
+.info-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 16px;
+  font-size: 1.312rem;
+}
+.manage-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  margin: 8px 16px;
+}
+.cc-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 16px 8px;
+}
+
+input,
+form {
+  border-radius: 5px;
+  font-family: var(--ff-primary);
+}
+.manage-buttons > *,
+.cc-buttons > * {
+  margin-right: 12px;
+  color: darkorange;
+  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-color: rgb(44, 44, 44);
 }

@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 import logo from "../images/logo_small.png";
 import "../styles/TopMenu.css";
 
-//TODO: Logout Button (Route to PublicPage)
-
 function mapStateToProps(state) {
   return state;
 }
 
 function TopMenu(props) {
-  let isAdmin = props.authenticationReducer.user.isAdministrator;
-  let userStatus = "User";
-  if (isAdmin) {
+  let user = props.authenticationReducer.user;
+  let loggedIn = props.authenticationReducer.loggedIn;
+  let userStatus = "";
+  if (loggedIn && user.isAdministrator) {
     userStatus = "Admin";
+  } else if (loggedIn) {
+    userStatus = "User";
   }
   return (
     <div className="main-wrapper-top-menu">

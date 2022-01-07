@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 var messageService = require("./MessageService");
+var mongoose = require("mongoose");
 const Message = require("./MessageModel");
 var groupService = require("../group/GroupService");
 const Group = require("../group/GroupModel");
@@ -34,22 +35,26 @@ router.post("/send", function (req, res) {
 });
 
 //DELETE MESSAGE
-router.delete("/:id", function (req, res) {
-  Message.findByIdAndDelete(req.params.id)
+router.delete("/:id", function (req, res, next) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400);
+    return res.send("No valid ObjectId was given");
+  }
+  Message.deleteOne({ _id: req.params.id })
     .then((doc) => {
-      if (!doc) {
-        return res.status(404).end();
+      console.log(doc);
+      if (!doc) return res.status(404).end();
+      if (doc.deletedCount == 0) {
+        res.status(404);
+        return res.send("No Message found for this ObjectId");
       }
-      console.log("MESSAGE DELETED");
-      return res.send(doc + "\n\nDELETED MESSAGE");
+      return res.send("MESSAGE DELETED");
     })
     .catch((err) => next(err));
 });
 
-module.exports = router;
-
 //GET SINGLE MESSAGE
-router.get("/:id", function (req, res) {
+router.get("/:id", function (req, res, next) {
   Message.findById(req.params.id)
     .then((doc) => {
       if (!doc) {

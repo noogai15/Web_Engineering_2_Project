@@ -1,4 +1,0 @@
-TODO: Frontend option to send Messages; create form and fill out fields
-TODO: Frontend option to create Groups
-TODO: Logout option (fix)
-TODO: Automatic logout afer 30 seconds or so

@@ -10,7 +10,8 @@ export const LOGOUT_ACTION = "LOGOUT_ACTION";
 export const GET_ALL_USERS_SUCCESS = "GET_ALL_USERS_SUCCESS";
 export const GET_ALL_USERS_ERROR = "GET_ALL_USERS_ERROR";
 
-//TODO: Maybe use state here instead?
+export const DELETE_SUCCESS = "DELETE_SUCCESS";
+export const DELETE_ERROR = "DELETE_ERROR";
 export var user = "";
 export var token = "";
 
@@ -67,6 +68,19 @@ export function getAllUsersError(error) {
   };
 }
 
+export function getDeleteSuccessAction(users) {
+  return {
+    type: DELETE_SUCCESS,
+    allUsers: users,
+  };
+}
+
+export function getDeleteErrorAction() {
+  return {
+    type: DELETE_ERROR,
+  };
+}
+
 export function authenticateUser(userName, password) {
   console.log("Authenticate");
 
@@ -102,13 +116,54 @@ export function login(userName, password) {
 
     headers: { Authorization: "Basic " + cred },
   };
-  return fetch("http://localhost:8080/authenticate/login", requestOptions)
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "authenticate/login",
+    requestOptions
+  )
     .then(handleResponse)
     .then((userSession) => {
       return userSession;
     });
 }
 
+export function dispatchDeleteUser(userName, token) {
+  return (dispatch) => {
+    deleteUser(userName, token).then(
+      (success) => {
+        dispatch(getAllUsers());
+        // setTimeout(() => {
+        //   dispatch(getAllUsers());
+        // }, 1000);
+      },
+      (error) => {
+        dispatch(getDeleteErrorAction());
+      }
+    );
+  };
+}
+export function deleteUser(userName, token) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userName: userName,
+    }),
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "user/",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not delete User");
+      return;
+    }
+  });
+}
 export function getAllUsers() {
   console.log("Attempting to get all users");
   return (dispatch) => {
@@ -132,16 +187,17 @@ function allUsers() {
     method: "GET",
     //headers: { Authorization: "Basic " + cred },
   };
-  return fetch("http://localhost:8080/user", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        console.log("Could not get proper response");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "user",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get proper response");
+      return;
     }
-  );
+  });
 }
 
 function handleResponse(response) {

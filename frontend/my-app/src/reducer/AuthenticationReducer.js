@@ -1,5 +1,4 @@
 import * as authenticationActions from "../actions/AuthenticationActions";
-import * as userActions from "../actions/UserActions";
 
 const initialState = {
   user: {
@@ -64,12 +63,6 @@ export function authenticationReducer(state = initialState, action) {
       };
     }
 
-    case userActions.EDIT_SUCCESS: {
-      return {
-        ...state,
-        user: action.user,
-      };
-    }
     case authenticationActions.GET_ALL_USERS_SUCCESS:
       return {
         ...state,
@@ -81,6 +74,16 @@ export function authenticationReducer(state = initialState, action) {
         ...state,
         error: action.error,
       };
+    case authenticationActions.DELETE_SUCCESS:
+      return {
+        ...state,
+        users: action.allUsers,
+      };
+    case authenticationActions.DELETE_ERROR:
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

@@ -14,6 +14,8 @@ function SendMessageWidget(props) {
   const [receiver, setReceiver] = useState("");
   const [subject, setSubject] = useState("");
   const [content, setContent] = useState("");
+  const [toUser, setToUser] = useState(true);
+  const [toGroup, setToGroup] = useState(false);
 
   const [show, setShow] = useState(false);
 
@@ -48,7 +50,8 @@ function SendMessageWidget(props) {
         receiver,
         props.user.userName,
         subject,
-        content
+        content,
+        props.accessToken
       )
     );
     console.log("Pushed submit");
@@ -62,21 +65,63 @@ function SendMessageWidget(props) {
         receiver,
         props.user.userName,
         subject,
-        content
+        content,
+        props.accessToken
       )
     );
     console.log("Pushed submit");
     setShow(false);
   }
 
+  function createSubmitButton() {
+    if (toGroup) {
+      return (
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={handleSubmitGroupMessage}
+        >
+          Send to Group
+        </Button>
+      );
+    }
+
+    if (toUser) {
+      return (
+        <Button
+          variant="primary"
+          type="submit"
+          onClick={handleSubmitUserMessage}
+        >
+          Send to User
+        </Button>
+      );
+    }
+  }
+
   return (
     <div>
       <Button id="send_message_button" variant="primary" onClick={handleShow}>
-        Send Message
+        Send Message to:
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Send message</Modal.Title>
+          <Button
+            id="switch_receiver_button"
+            variant="primary"
+            onClick={() => {
+              if (toUser) {
+                setToUser(false);
+                setToGroup(true);
+              } else {
+                setToUser(true);
+                setToGroup(false);
+              }
+            }}
+          >
+            Switch Receiver
+          </Button>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -111,28 +156,12 @@ function SendMessageWidget(props) {
             </Form.Group>
 
             <Form.Group controlId="formBasicCheckbox"></Form.Group>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={handleSubmitUserMessage}
-            >
-              Send to User
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={handleSubmitGroupMessage}
-            >
-              Send to Group
-            </Button>
+            {createSubmitButton()}
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>

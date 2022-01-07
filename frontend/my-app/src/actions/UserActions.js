@@ -5,6 +5,14 @@ export const EDIT_PENDING = "EDIT_PENDING";
 export const EDIT_SUCCESS = "EDIT_SUCCESS";
 export const EDIT_ERROR = "EDIT_ERROR";
 
+export const GET_ALL_GROUPS_SUCCESS = "GET_ALL_GROUPS_SUCCESS";
+export const GET_ALL_GROUPS_ERROR = "GET_ALL_GROUPS_ERROR";
+export const GET_ALL_GROUPS_PENDING = "GET_ALL_GROUPS_PENDING";
+
+export const DELETE_GROUPS_SUCCESS = "DELETE_GROUPS_SUCCESS";
+export const DELETE_GROUPS_ERROR = "DELETE_GROUPS_ERROR";
+export const DELETE_GROUPS_PENDING = "DELETE_GROUPS_PENDING";
+
 export function getShowEditDialogAction() {
   return {
     type: SHOW_EDIT_DIALOG,
@@ -20,6 +28,39 @@ export function getHideEditDialogAction() {
 export function getEditUserPendingAction() {
   return {
     type: EDIT_PENDING,
+  };
+}
+
+export function getAllGroupsSuccessAction(groups) {
+  return {
+    type: GET_ALL_GROUPS_SUCCESS,
+    groups,
+  };
+}
+
+export function getAllGroupsErrorAction(error) {
+  return {
+    type: GET_ALL_GROUPS_ERROR,
+    error: error,
+  };
+}
+
+export function getAllGroupsPendingAction() {
+  return {
+    type: GET_ALL_GROUPS_PENDING,
+  };
+}
+
+export function getDeleteGroupSuccessAction(allGroups) {
+  return {
+    type: DELETE_GROUPS_SUCCESS,
+    allGroups,
+  };
+}
+
+export function getDeleteGroupErrorAction() {
+  return {
+    type: DELETE_GROUPS_ERROR,
   };
 }
 
@@ -70,45 +111,152 @@ function edit(userInfo) {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      userName: userInfo.oldUserName,
+      oldGroupName: userInfo.oldUserName,
       newUserName: userInfo.newUserName,
       newPassword: userInfo.newPassword,
       email: "test@gmail.com",
     }),
   };
-  return fetch("http://localhost:8080/user/", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        response.json();
-      } else {
-        console.log("Could not get proper response");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "user/",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      response.json();
+    } else {
+      console.log("Could not get proper response");
+      return;
     }
-  );
+  });
 }
 
-export function deleteUser(userName, token) {
+export function getUserGroups(id) {
   const requestOptions = {
-    method: "DELETE",
-    headers: {
-      Authorization: "Bearer " + token,
-      "Content-Type": "application/json",
-    },
+    method: "GET",
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "group/groupsOf/" + id,
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get a proper response");
+      return;
+    }
+  });
+}
+
+export function editGroup(oldGroupName, newGroupName) {
+  const requestOptions = {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      userName: userName,
+      oldGroupName,
+      newGroupName,
     }),
   };
-  return fetch("http://localhost:8080/user/", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        return response;
-      } else {
-        console.log("Could not delete User");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "group/",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      response.json();
+    } else {
+      console.log("Could not get proper response");
+      return;
     }
-  );
+  });
+}
+export function getAllUsers() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "user",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get all Users");
+      return;
+    }
+  });
+}
+
+export function dispatchGetAllGroups() {
+  console.log("Attempting to get all groups");
+  return (dispatch) => {
+    getAllGroups()
+      .then(
+        (groups) => {
+          dispatch(getAllGroupsSuccessAction(groups));
+        },
+        (error) => {
+          dispatch(getAllGroupsErrorAction(error));
+        }
+      )
+      .catch((error) => {
+        dispatch(getAllGroupsErrorAction(error));
+      });
+  };
+}
+
+export function dispatchDeleteGroup(groupName) {
+  return (dispatch) => {
+    deleteGroup(groupName).then(
+      (success) => {
+        dispatch(dispatchGetAllGroups());
+      },
+      (error) => {
+        dispatch(getDeleteGroupErrorAction());
+      }
+    );
+  };
+}
+
+export function getAllGroups() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "group",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get all Groups");
+      return;
+    }
+  });
+}
+
+export function getUser() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "user",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not get User");
+      return;
+    }
+  });
 }
 
 export function deleteGroup(groupName) {
@@ -118,17 +266,18 @@ export function deleteGroup(groupName) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      groupName: groupName,
+      groupName,
     }),
   };
-  return fetch("http://localhost:8080/group/", requestOptions).then(
-    (response) => {
-      if (response.ok) {
-        return response;
-      } else {
-        console.log("Could not delete User");
-        return;
-      }
+  return fetch(
+    process.env.REACT_APP_BACKEND_ROUTE + "group/",
+    requestOptions
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.log("Could not delete Group");
+      return;
     }
-  );
+  });
 }

@@ -3,14 +3,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
 import * as registerActions from "../actions/RegisterActions";
 
 function mapStateToProps(state) {
   return state.authenticationReducer;
 }
 
-function UserRegisterWidget() {
+function GroupRegisterWidget(props) {
   const dispatch = useDispatch();
   const [groupName, setGroupName] = useState("");
   const [members, setMembers] = useState([]);
@@ -38,7 +37,9 @@ function UserRegisterWidget() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(registerActions.getRegisterGroup(groupName, members));
+    dispatch(
+      registerActions.getRegisterGroup(groupName, members, props.accessToken)
+    );
     console.log("Pushed submit");
     setShow(false);
   }
@@ -84,27 +85,15 @@ function UserRegisterWidget() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
         </Modal.Footer>
       </Modal>
     </div>
   );
 }
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      showRegisterDialogAction: registerActions.getShowRegisterDialogAction,
-      hideRegisterDialogAction: registerActions.getHideRegisterDialogAction,
-      registerUserAction: registerActions.registerUser,
-    },
-    dispatch
-  );
 
-const ConnectedUserRegisterWidget = connect(
+const ConnectedGroupRegisterWidget = connect(
   mapStateToProps,
-  mapDispatchToProps
-)(UserRegisterWidget);
+  null
+)(GroupRegisterWidget);
 
-export default ConnectedUserRegisterWidget;
+export default ConnectedGroupRegisterWidget;

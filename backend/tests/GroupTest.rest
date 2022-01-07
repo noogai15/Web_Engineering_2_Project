@@ -1,43 +1,48 @@
 //CREATE GROUP
-POST http://localhost:8080/group/createGroup
+POST https://localhost:8080/group/createGroup
 Content-Type: application/json
 
 {
-    "groupName": "Test Group",
+    "groupName": "Test asdsGsasdasddaroup",
     "members": []
 }
 
 ###
 //UPDATE GROUP
-PUT http://localhost:8080/group/222
+PUT https://localhost:8080/group/
 Content-Type: application/json
 
 {
 
-    "groupName": "(Updated) Group Name 2.2"
+    "oldGroupName": "Changed Name for Group",
+    "newGroupName": "123Group"
 }
 ###
 
 //GET ALL GROUPS
-GET http://localhost:8080/group
+GET https://localhost:8080/group
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //DELETE GROUP
-DELETE http://localhost:8080/group/202020
+DELETE https://localhost:8080/group/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
+Content-Type: application/json
 
+{
+    "groupName": "admins group"
+}
 ###
 
 //REMOVE LAST ADDED MEMBER
-PUT http://localhost:8080/group/removeLast/111
+PUT https://localhost:8080/group/removeLast/111
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 ###
 
 //SUBSCRIBE USER TO GROUP
-PUT http://localhost:8080/group/subscribeUser
+PUT https://localhost:8080/group/subscribeUser
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 Content-Type: application/json
 
@@ -48,7 +53,7 @@ Content-Type: application/json
 ###
 
 //GET GROUPS THE USER IS SUBSCIBED TO
-GET http://localhost:8080/group/groupsOf/456
+GET https://localhost:8080/group/groupsOf/251572
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiWWFrdXBXb3JraW5nIiwiaWF0IjoxNjIwMjkyOTQ2LCJleHAiOjE2MjE5MTM1Mzk0NDh9.37eXSyixynMA6fCgAouuRP8Tmk_w1JSh_dHM2oJp_Rg
 
 
