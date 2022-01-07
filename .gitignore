@@ -123,6 +123,11 @@ web_modules/
 .env.production.local
 .env.local
 
+# keys
+*.pem
+./backend/certificates
+backend/certificates
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
